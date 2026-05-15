@@ -1,0 +1,48 @@
+
+<div class="splash starfield scanlines" role="main">
+  <div class="splash__inner">
+
+    <div class="splash__logo-wrap">
+      <span class="splash__logo-icon pulse-glow" aria-hidden="true">◎</span>
+    </div>
+
+    <!-- Title -->
+    <div class="splash__title-block">
+      <h1 class="splash__title font-pixel">
+        TRACK<span class="glitch">W</span>ALLET
+      </h1>
+      <p class="splash__subtitle font-rpg">
+        FAMILY BUDGET QUEST — MANAGE YOUR PARTY'S TREASURY
+      </p>
+    </div>
+
+    <!-- Pixel art character row -->
+   <div class="splash__characters" aria-hidden="true">
+  @for (member of party(); track member.label) {
+    <app-pixel-character 
+      [headColor]="member.headColor"
+      [bodyColor]="member.bodyColor"
+      [label]="member.label"
+    />
+  }
+</div>
+
+    <!-- Version / tagline -->
+    <p class="splash__version font-pixel">v1.0.0 — MAY 2026</p>
+
+    <!-- CTA buttons -->
+    <div class="splash__actions">
+      <a href="#register" class="pixel-btn pixel-btn--gold splash__btn-start font-pixel">
+        ► START ADVENTURE
+      </a>
+      <a  [routerLink]="['/login']" class="pixel-btn pixel-btn--ghost splash__btn-login font-pixel"> ◄ CONTINUE QUEST</a>
+   
+    </div>
+
+    <!-- Blink prompt -->
+    <p class="splash__press-start font-pixel blink" aria-live="polite">
+      PRESS START TO BEGIN
+    </p>
+
+  </div>
+</div>

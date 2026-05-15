@@ -1,0 +1,4 @@
+
+.splash__char {
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
+}

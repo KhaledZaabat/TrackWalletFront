@@ -1,0 +1,106 @@
+<div class="auth-shell starfield scanlines">
+  <div class="auth-shell__inner">
+
+    <section class="auth-screen" id="login" aria-labelledby="login-title">
+      <div class="pixel-card pixel-card--gold pixel-card--corners">
+        <span class="corner-bl"></span>
+        <span class="corner-br"></span>
+
+        <header class="auth__header">
+          <h1 class="auth__title font-pixel" id="login-title">► PLAYER LOGIN</h1>
+          <p class="auth__subtitle font-rpg">ENTER YOUR CREDENTIALS TO CONTINUE</p>
+        </header>
+
+        <form class="auth__form" [formRoot]="loginForm">
+
+          <!-- EMAIL -->
+          <app-field label="EMAIL ADDRESS">
+            <input
+              class="pixel-input"
+              id="login-email"
+              type="email"
+              placeholder="player@guild.io"
+              autocomplete="email"
+              [formField]="loginForm.email"
+              [formFieldDir]="loginForm.email"
+            />
+          </app-field>
+
+          <!-- PASSWORD -->
+          <app-field label="PASSWORD">
+            <div class="auth__password-wrap">
+              <input
+                class="pixel-input auth__password-input"
+                id="login-password"
+                [type]="showPassword() ? 'text' : 'password'"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                [formField]="loginForm.password"
+                [formFieldDir]="loginForm.password"
+              />
+              <button
+                class="auth__show-btn"
+                type="button"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                (click)="toggleShowPassword()"
+              >
+                @if (!showPassword()) {
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                } @else {
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8
+                             a18.45 18.45 0 0 1 5.06-5.94"/>
+                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8
+                             a18.5 18.5 0 0 1-2.16 3.19"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                }
+                <span class="font-pixel">{{ showPassword() ? 'HIDE' : 'SHOW' }}</span>
+              </button>
+            </div>
+          </app-field>
+
+          <!-- FORGOT PASSWORD -->
+          <div class="auth__link-row auth__link-row--right">
+            <a href="#forgot" class="auth__link font-pixel">FORGOT PASSWORD? ►</a>
+          </div>
+
+          @if (loginForm().submitting()) {
+            <div class="font-pixel">⏳ PLEASE WAIT...</div>
+          }
+
+          <!-- SUBMIT -->
+          <button class="pixel-btn pixel-btn--gold auth__submit font-pixel" type="submit">
+            ► LOGIN
+          </button>
+
+          <!-- DIVIDER -->
+          <div class="auth__divider">
+            <hr class="divider-dash"/>
+            <span class="auth__divider-label font-pixel">◆ OR ◆</span>
+            <hr class="divider-dash"/>
+          </div>
+
+          <!-- GOOGLE -->
+          <button class="auth__google-btn font-pixel" type="button">
+            <span class="auth__google-g" aria-hidden="true">G</span>
+            SIGN IN WITH GOOGLE
+          </button>
+
+          <!-- REGISTER LINK -->
+          <div class="auth__link-row auth__link-row--center">
+            <span class="auth__link-preamble font-pixel">NO ACCOUNT?</span>
+            <a href="#register" class="auth__link font-pixel">REGISTER HERE ►</a>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </div>
+</div>

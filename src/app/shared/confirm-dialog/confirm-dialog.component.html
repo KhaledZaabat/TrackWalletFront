@@ -1,0 +1,31 @@
+<dialog #dialogRef (click)="onDialogClick($event)" (close)="onCancel()">
+
+  <div class="confirm-dialog-content"
+       [class.pixel-border]="variant() !== 'destructive'"
+       [class.pixel-border-danger]="variant() === 'destructive'"
+       [class.is-destructive]="variant() === 'destructive'">
+
+    <div class="confirm-dialog-header">
+      <h2 class="confirm-dialog-title">{{ title() }}</h2>
+      <p class="confirm-dialog-description">{{ description() }}</p>
+    </div>
+
+    <div class="confirm-dialog-footer">
+
+      <button class="pixel-btn pixel-btn-ghost" type="button" (click)="onCancel()">
+         {{ cancelLabel() }}
+      </button>
+
+      <button
+        class="pixel-btn"
+        [class.pixel-btn-danger]="variant() === 'destructive'"
+        type="button"
+        autofocus
+        (click)="onConfirm()">
+        {{ confirmLabel() }}
+      </button>
+
+    </div>
+  </div>
+
+</dialog>

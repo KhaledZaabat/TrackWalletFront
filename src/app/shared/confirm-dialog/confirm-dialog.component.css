@@ -1,0 +1,122 @@
+
+
+/* ── Native dialog reset ─────────────────────────────────── */
+dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.2) 3px, rgba(0,0,0,0) 4px
+  );
+  animation: dialog-overlay-in 120ms ease-out;
+}
+
+/* ── Content panel — extends .pixel-border / .pixel-border-danger ── */
+.confirm-dialog-content {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+  font-family: "VT323", monospace;
+  animation: dialog-content-in 120ms steps(4) both;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.confirm-dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.confirm-dialog-title {
+  margin: 0;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--tw-text);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+/* reuse global .cursor-arrow pattern */
+.confirm-dialog-title::before {
+  content: "► ";
+  color: var(--border-pixel);
+  animation: blink 0.8s steps(2) infinite; /* global keyframe */
+}
+
+.is-destructive .confirm-dialog-title {
+  color: var(--tw-red);
+}
+
+.is-destructive .confirm-dialog-title::before {
+  content: "⚠ ";
+  color: var(--tw-red);
+}
+
+.confirm-dialog-description {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--tw-text-muted);
+  line-height: 1.4;
+  border-left: 2px solid var(--border-pixel);
+  padding-left: 0.625rem;
+}
+
+.is-destructive .confirm-dialog-description {
+  border-left-color: var(--tw-red);
+}
+
+/* reuse .divider-dash pattern inline */
+.confirm-dialog-header::after {
+  content: "";
+  display: block;
+  height: 2px;
+  margin-top: 0.25rem;
+  background-image: linear-gradient(
+    to right, var(--border-pixel) 50%, transparent 50%
+  );
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  opacity: 0.6;
+}
+
+.is-destructive .confirm-dialog-header::after {
+  background-image: linear-gradient(
+    to right, var(--tw-red) 50%, transparent 50%
+  );
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.confirm-dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .confirm-dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes dialog-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes dialog-content-in {
+  from { opacity: 0; transform: scale(0.95) translateY(4px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}

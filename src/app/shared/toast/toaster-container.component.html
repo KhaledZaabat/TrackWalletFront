@@ -1,0 +1,28 @@
+<div class="toaster-container">
+  @for (toast of toasts(); track toast.id) {
+   <div class="toast base" [ngClass]="toastClassMap[toast.severity]"
+      [attr.aria-live]="getAriaLive(toast.severity)"
+      [attr.role]="getRole(toast.severity)"
+      (mouseenter)="onMouseEnter(toast.id)"
+      (mouseleave)="onMouseLeave(toast.id)"
+    >
+      <span class="toast__message">{{ toast.message }}</span>
+
+      <button
+        class="toast__dismiss"
+        type="button"
+        aria-label="Dismiss notification"
+        (click)="onDismiss(toast.id)"
+      >
+        ✕
+      </button>
+
+      @if (toast.duration > 0) {
+        <div
+          class="toast__drain"
+          [style.animation-duration.ms]="toast.duration"
+        ></div>
+      }
+    </div>
+  }
+</div>

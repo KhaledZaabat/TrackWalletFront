@@ -1,0 +1,290 @@
+
+<div class="shell">
+
+  <!-- ── TOP STATUS BAR ── -->
+  <header class="shell__header scanlines">
+    <div class="shell__header-inner container">
+
+      <!-- Brand + Guild switcher -->
+      <div class="shell__brand">
+        <span class="shell__brand-icon pulse-glow">◎</span>
+        <span class="shell__brand-name font-pixel">
+          TRACK<span class="glitch">W</span>ALLET
+        </span>
+        <button class="shell__guild-switcher font-pixel" aria-label="Switch guild">
+          <span class="shell__guild-crest">⚔</span>
+          <span class="shell__guild-name">SMITH GUILD</span>
+          <span class="shell__guild-arrow">▼</span>
+        </button>
+      </div>
+
+      <!-- HP / Budget bar (desktop) -->
+      <div class="shell__hp-region">
+        <span class="shell__hp-label font-pixel">HP</span>
+        <div class="shell__hp-bar-wrap">
+          <!-- hp-bar component slot -->
+          <div class="hp-bar" role="progressbar" aria-label="Budget remaining" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg hp-seg--green"></div>
+            <div class="hp-seg"></div>
+          </div>
+        </div>
+        <span class="shell__hp-pct font-pixel">95%</span>
+      </div>
+
+      <!-- Right controls -->
+      <div class="shell__controls">
+        <span class="shell__coin coin-spin font-pixel" aria-hidden="true">◎</span>
+        <span class="shell__balance font-pixel">9,500</span>
+
+        <div class="shell__user">
+          <div class="avatar avatar--parent" style="width:32px;height:32px;background:#FFD700;font-size:10px;" aria-label="John Smith">JS</div>
+          <span class="shell__username font-pixel">JOHN ♛</span>
+        </div>
+
+        <button class="shell__logout pixel-btn pixel-btn--ghost" aria-label="Logout">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span class="shell__logout-label">LOGOUT</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ── MAIN GRID ── -->
+  <div class="shell__body container">
+
+    <!-- Left sidebar nav -->
+    <aside class="shell__sidebar" aria-label="Main navigation">
+      <div class="shell__sidebar-inner">
+
+        <!-- Navigation menu -->
+        <nav class="pixel-card pixel-card--purple pixel-card--corners" aria-label="App sections">
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
+          <div class="shell__nav-heading font-pixel">► MENU</div>
+          <ul class="shell__nav-list" role="list">
+            <li>
+              <a href="#dashboard" class="shell__nav-item shell__nav-item--active" aria-current="page">
+                <span class="shell__nav-cursor blink" aria-hidden="true">►</span>
+                <span class="shell__nav-icon" aria-hidden="true">🗺</span>
+                <span class="shell__nav-label font-pixel">WORLD MAP</span>
+              </a>
+            </li>
+            <li>
+              <a href="#transactions" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">📜</span>
+                <span class="shell__nav-label font-pixel">QUEST LOG</span>
+              </a>
+            </li>
+            <li>
+              <a href="#budget-history" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">📊</span>
+                <span class="shell__nav-label font-pixel">HISTORY</span>
+              </a>
+            </li>
+            <li>
+              <a href="#add" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">✚</span>
+                <span class="shell__nav-label font-pixel">NEW QUEST</span>
+              </a>
+            </li>
+            <li>
+              <a href="#family" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">⚔</span>
+                <span class="shell__nav-label font-pixel">GUILD HALL</span>
+              </a>
+            </li>
+            <li>
+              <a href="#members" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">👥</span>
+                <span class="shell__nav-label font-pixel">PARTY MEMBERS</span>
+              </a>
+            </li>
+            <li>
+              <a href="#invitations" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">✉</span>
+                <span class="shell__nav-label font-pixel">INVITATIONS</span>
+              </a>
+            </li>
+            <li>
+              <a href="#invite" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">📨</span>
+                <span class="shell__nav-label font-pixel">INVITE MEMBER</span>
+              </a>
+            </li>
+            <li>
+              <a href="#settings" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">⚙</span>
+                <span class="shell__nav-label font-pixel">GUILD SETTINGS</span>
+              </a>
+            </li>
+            <li>
+              <a href="#profile" class="shell__nav-item">
+                <span class="shell__nav-cursor" aria-hidden="true"> </span>
+                <span class="shell__nav-icon" aria-hidden="true">👤</span>
+                <span class="shell__nav-label font-pixel">CHARACTER</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Current guild card -->
+        <div class="pixel-card pixel-card--corners">
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
+          <div class="shell__guild-card-label font-pixel">► CURRENT GUILD</div>
+          <div class="shell__guild-card-info">
+            <span class="shell__guild-card-crest" aria-hidden="true">⚔</span>
+            <span class="shell__guild-card-name font-pixel">SMITH GUILD</span>
+          </div>
+          <button class="pixel-btn pixel-btn--ghost shell__guild-switch-btn font-pixel">
+            ⇄ SWITCH GUILD
+          </button>
+        </div>
+
+        <!-- Save file card -->
+        <div class="pixel-card">
+          <div class="shell__save-label font-pixel">SAVE FILE</div>
+          <div class="shell__save-status font-rpg">● AUTO-SAVED</div>
+          <div class="shell__save-date font-rpg">MAY 09, 2026</div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="shell__main" id="main-content">
+      <div class="shell__page-header">
+        <h1 class="shell__page-title font-pixel">
+          <span class="blink" aria-hidden="true">►</span>
+          WORLD MAP — HQ
+        </h1>
+        <button class="pixel-btn pixel-btn--gold shell__new-quest-btn font-pixel">
+          ✚ NEW QUEST
+        </button>
+      </div>
+
+      <!-- Page content slot -->
+      <div class="shell__content">
+        <!-- Router outlet / page component goes here -->
+      </div>
+    </main>
+
+    <!-- Right panel -->
+    <aside class="shell__right-panel" aria-label="Party info">
+      <div class="shell__right-inner">
+
+        <!-- Party roster -->
+        <div class="pixel-card pixel-card--gold pixel-card--corners">
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
+          <div class="shell__panel-heading font-pixel">► PARTY ROSTER</div>
+          <ul class="shell__roster-list" role="list">
+            <li class="shell__roster-item">
+              <div class="avatar avatar--parent" style="width:36px;height:36px;background:#FFD700;font-size:11px;" aria-label="John Smith">JS</div>
+              <div class="shell__roster-info">
+                <span class="shell__roster-name font-pixel">JOHN SMITH</span>
+                <span class="shell__roster-role font-rpg">♛ LEADER</span>
+              </div>
+            </li>
+            <li class="shell__roster-item">
+              <div class="avatar avatar--parent" style="width:36px;height:36px;background:#BD93F9;font-size:11px;" aria-label="Sara Smith">SS</div>
+              <div class="shell__roster-info">
+                <span class="shell__roster-name font-pixel">SARA SMITH</span>
+                <span class="shell__roster-role font-rpg">♛ LEADER</span>
+              </div>
+            </li>
+            <li class="shell__roster-item">
+              <div class="avatar" style="width:36px;height:36px;background:#00D4FF;font-size:11px;" aria-label="Tim Smith">TS</div>
+              <div class="shell__roster-info">
+                <span class="shell__roster-name font-pixel">TIM SMITH</span>
+                <span class="shell__roster-role font-rpg">◆ MEMBER</span>
+              </div>
+            </li>
+            <li class="shell__roster-item">
+              <div class="avatar" style="width:36px;height:36px;background:#39FF14;font-size:11px;" aria-label="Mia Smith">MS</div>
+              <div class="shell__roster-info">
+                <span class="shell__roster-name font-pixel">MIA SMITH</span>
+                <span class="shell__roster-role font-rpg">◆ MEMBER</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- System alerts -->
+        <div class="pixel-card pixel-card--corners">
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
+          <div class="shell__panel-heading font-pixel" style="color:var(--color-amber);">► SYSTEM ALERTS</div>
+          <ul class="shell__alerts-list font-rpg" role="list">
+            <li class="shell__alert shell__alert--green">◆ +500 GOLD GAINED</li>
+            <li class="shell__alert shell__alert--amber">◆ NEW INVITATION</li>
+            <li class="shell__alert shell__alert--primary">◆ MIA LOGGED A QUEST</li>
+            <li class="shell__alert shell__alert--purple">◆ LEVEL UP NEAR!</li>
+          </ul>
+        </div>
+
+        <!-- Tip of the day -->
+        <div class="pixel-card pixel-card--purple pixel-card--corners">
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
+          <div class="shell__panel-heading font-pixel">► TIP OF THE DAY</div>
+          <p class="shell__tip font-rpg">
+            "A WISE PARTY LOGS EVERY QUEST. EVEN POTION RUNS COUNT TOWARD YOUR XP."
+          </p>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <nav class="shell__mobile-nav" aria-label="Mobile navigation">
+    <a href="#dashboard"   class="shell__mobile-nav-item shell__mobile-nav-item--active" aria-current="page">
+      <span aria-hidden="true">🗺</span>
+      <span class="font-pixel">MAP</span>
+    </a>
+    <a href="#transactions" class="shell__mobile-nav-item">
+      <span aria-hidden="true">📜</span>
+      <span class="font-pixel">QUESTS</span>
+    </a>
+    <a href="#add" class="shell__mobile-nav-item">
+      <span aria-hidden="true">✚</span>
+      <span class="font-pixel">ADD</span>
+    </a>
+    <a href="#family" class="shell__mobile-nav-item">
+      <span aria-hidden="true">⚔</span>
+      <span class="font-pixel">GUILD</span>
+    </a>
+    <a href="#profile" class="shell__mobile-nav-item">
+      <span aria-hidden="true">👤</span>
+      <span class="font-pixel">ME</span>
+    </a>
+  </nav>
+
+
+  <footer class="shell__footer font-rpg">
+    TRACKWALLET v1.0.0 — © 2026 SMITH GUILD · PRESS F1 FOR HELP · ◆ SAVE YOUR PROGRESS ◆
+  </footer>
+
+</div>

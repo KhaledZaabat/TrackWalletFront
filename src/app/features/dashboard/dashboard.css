@@ -1,0 +1,392 @@
+/* ============================================================
+   SHELL — App Layout
+   ============================================================ */
+
+/* ── Outer wrapper ── */
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-void);
+}
+
+/* ── Header ── */
+.shell__header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg-panel);
+  border-bottom: 2px solid var(--border-pixel);
+  box-shadow: 0 4px 0 #000;
+}
+
+.shell__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 12px;
+}
+
+/* Brand */
+.shell__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shell__brand-icon {
+  font-size: 24px;
+  color: var(--color-gold);
+}
+
+.shell__brand-name {
+  font-size: 16px;
+  color: var(--color-gold);
+}
+
+.shell__guild-switcher {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 9px;
+  background: rgba(123, 47, 190, 0.15);
+  border: 2px solid var(--border-glow);
+  color: var(--color-purple);
+  box-shadow: var(--shadow-pixel-sm);
+  cursor: pointer;
+  transition: var(--transition-pixel);
+}
+
+.shell__guild-switcher:hover {
+  background: rgba(123, 47, 190, 0.25);
+}
+
+.shell__guild-name { color: var(--color-gold); }
+.shell__guild-arrow { color: var(--color-primary); }
+
+/* HP region */
+.shell__hp-region {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 400px;
+}
+
+.shell__hp-label {
+  font-size: 8px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.shell__hp-bar-wrap { flex: 1; }
+
+.shell__hp-pct {
+  font-size: 9px;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+/* Right controls */
+.shell__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shell__coin {
+  font-size: 18px;
+  color: var(--color-gold);
+}
+
+.shell__balance {
+  font-size: 10px;
+  color: var(--color-gold);
+}
+
+.shell__user {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  border-left: 2px dashed var(--border-pixel);
+}
+
+.shell__username {
+  font-size: 9px;
+  color: var(--color-text);
+}
+
+.shell__logout {
+  font-size: 9px;
+  color: var(--color-red);
+  border-color: var(--color-red);
+  box-shadow: 2px 2px 0 #000, 0 0 8px rgba(255, 59, 59, 0.25);
+}
+
+.shell__logout-label { display: none; }
+
+/* ── Body grid ── */
+.shell__body {
+  display: grid;
+  gap: 24px;
+  padding-block: 24px;
+  flex: 1;
+  grid-template-columns: 1fr;
+}
+
+/* ── Sidebar ── */
+.shell__sidebar { display: none; }
+
+.shell__sidebar-inner {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shell__nav-heading {
+  font-size: 9px;
+  color: var(--color-amber);
+  margin-bottom: 12px;
+}
+
+.shell__nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shell__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 2px solid transparent;
+  text-decoration: none;
+  transition: var(--transition-pixel);
+}
+
+.shell__nav-item--active {
+  border-color: var(--border-gold);
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: var(--shadow-pixel-sm);
+}
+
+.shell__nav-cursor {
+  width: 14px;
+  color: var(--color-primary);
+  font-family: var(--font-rpg);
+  font-size: 14px;
+}
+
+.shell__nav-icon { font-size: 18px; }
+
+.shell__nav-label {
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.shell__nav-item--active .shell__nav-label { color: var(--color-primary); }
+
+/* Guild card */
+.shell__guild-card-label {
+  font-size: 8px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.shell__guild-card-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.shell__guild-card-crest { font-size: 24px; }
+
+.shell__guild-card-name {
+  font-size: 9px;
+  color: var(--color-gold);
+}
+
+.shell__guild-switch-btn {
+  width: 100%;
+  font-size: 8px;
+  padding: 8px;
+}
+
+/* Save file */
+.shell__save-label {
+  font-size: 8px;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.shell__save-status {
+  font-size: 14px;
+  color: var(--color-green);
+}
+
+.shell__save-date {
+  font-size: 14px;
+  color: var(--color-gray);
+}
+
+/* ── Main content ── */
+.shell__main { min-width: 0; }
+
+.shell__page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.shell__page-title {
+  font-size: 16px;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.shell__new-quest-btn {
+  font-size: 9px;
+  padding: 8px 14px;
+}
+
+/* ── Right panel ── */
+.shell__right-panel { display: none; }
+
+.shell__right-inner {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shell__panel-heading {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+/* Roster */
+.shell__roster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shell__roster-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shell__roster-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.shell__roster-name {
+  font-size: 8px;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shell__roster-role {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* Alerts */
+.shell__alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.shell__alert--green   { color: var(--color-green); }
+.shell__alert--amber   { color: var(--color-amber); }
+.shell__alert--primary { color: var(--color-primary); }
+.shell__alert--purple  { color: var(--color-purple); }
+
+/* Tip */
+.shell__tip {
+  font-size: 16px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ── Mobile bottom nav ── */
+.shell__mobile-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: var(--bg-panel);
+  border-top: 2px solid var(--border-pixel);
+}
+
+.shell__mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 4px;
+  gap: 4px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.shell__mobile-nav-item span.font-pixel {
+  font-size: 7px;
+  color: var(--color-gray);
+}
+
+.shell__mobile-nav-item--active span.font-pixel { color: var(--color-primary); }
+
+/* ── Footer ── */
+.shell__footer {
+  padding: 16px 24px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--color-gray);
+  border-top: 2px solid var(--border-pixel);
+  background: var(--bg-panel);
+  margin-bottom: 60px; /* space for mobile nav */
+}
+
+/* ── RESPONSIVE ── */
+@media (min-width: 768px) {
+  .shell__guild-switcher { display: inline-flex; }
+  .shell__user           { display: flex; }
+  .shell__logout-label   { display: inline; }
+  .shell__sidebar        { display: block; }
+  .shell__mobile-nav     { display: none; }
+  .shell__footer         { margin-bottom: 0; }
+
+  .shell__body {
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .shell__hp-region  { display: flex; }
+  .shell__right-panel { display: block; }
+
+  .shell__body {
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr) minmax(0, 320px);
+  }
+}

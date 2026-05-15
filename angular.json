@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "5a71d67e-7ee8-4d54-8aa2-2bba574b02a8"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -53,16 +54,21 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "track-wallet:build:production"
-            },
-            "development": {
-              "buildTarget": "track-wallet:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
+         "builder": "@angular/build:dev-server",
+"options": {
+  "ssl": true,
+  "sslCert": "localhost+2.pem",
+  "sslKey": "localhost+2-key.pem"
+},
+"configurations": {
+  "production": {
+    "buildTarget": "track-wallet:build:production"
+  },
+  "development": {
+    "buildTarget": "track-wallet:build:development"
+  }
+},
+"defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
