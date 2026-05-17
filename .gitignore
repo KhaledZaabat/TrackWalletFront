@@ -1,44 +1,55 @@
 # ==========================================
 # ANGULAR
 # ==========================================
-/.angular/cache
-/dist
-/tmp
-/out-tsc
-/bazel-out
+/.angular/
+/angular/cache
+/dist/
+/out-tsc/
+/tmp/
+/bazel-out/
+/.ng/
 
-*.pem
-*.key
-*.crt
 # ==========================================
 # NODE
 # ==========================================
-/node_modules
+/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-.kiro/
+package-lock.json
+yarn.lock
+
 # ==========================================
 # ENVIRONMENT & SECRETS
 # ==========================================
 src/environments/environment.local.ts
-*.env
 .env
 .env.*
 !.env.example
+*.env
 
 # ==========================================
 # BUILD & CACHE
 # ==========================================
-/.cache
-/coverage
-.sass-cache/
-/typings
+/.cache/
+/coverage/
+/sass-cache/
+/typings/
+*.tsbuildinfo
 /libpeerconnection.log
 testem.log
 /connect.lock
 __screenshots__/
+/e2e/test-output/
+/e2e/screenshots
+
+# ==========================================
+# CERTIFICATES
+# ==========================================
+*.pem
+*.key
+*.crt
 
 # ==========================================
 # IDEs & EDITORS
@@ -52,7 +63,7 @@ __screenshots__/
 !.vscode/extensions.json
 !.vscode/mcp.json
 
-# JetBrains (WebStorm / Rider)
+# JetBrains
 .idea/
 *.iml
 
@@ -72,18 +83,10 @@ Thumbs.db
 desktop.ini
 
 # ==========================================
-# TESTING
-# ==========================================
-/coverage
-*.lcov
-/e2e/screenshots
-
-# ==========================================
 # MISC
 # ==========================================
 .history/
 *.log
 *.orig
-
-/coverage
-vitest.config.ts 
+.kiro/
+vitest.config.ts
