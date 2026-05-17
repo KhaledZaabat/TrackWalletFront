@@ -6,7 +6,7 @@ export const routes: Routes = [
     path: '',
     canActivate: [guestGuard],
     loadComponent: () => import('./features/home/home')
-      .then(m => m.Homecomponent)
+      .then(m => m.HomeComponent)
   },
   {
     path: 'login',

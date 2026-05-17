@@ -1,0 +1,9 @@
+@if (visible()) {
+      <div
+        class="form-banner form-banner--{{ variant() }}"
+        [attr.role]="role()"
+      >
+        <span class="form-banner__icon" aria-hidden="true">{{ icon() }}</span>
+        <span class="form-banner__message">{{ message() }}</span>
+      </div>
+    }

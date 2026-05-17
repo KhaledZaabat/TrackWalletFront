@@ -1,25 +1,27 @@
-import { Router } from "@angular/router";
-import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
-import { catchError, throwError } from "rxjs";
-import { inject } from "@angular/core";
-import { UserStore } from "../auth";
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpInterceptorFn,
+} from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+import { UserStore } from '../auth';
 
+/** Set to true on a request to opt out of the 401 redirect (e.g. /me bootstrap). */
 export const SKIP_AUTH_REDIRECT = new HttpContextToken<boolean>(() => false);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const userStore = inject(UserStore);
-  const router    = inject(Router);
+  const router = inject(Router);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 && !req.context.get(SKIP_AUTH_REDIRECT)) {
         userStore.clear();
-        router.navigate(['/']);
+        router.navigate(['/login']);
       }
       return throwError(() => err);
-    })
+    }),
   );
 };
-
-
-

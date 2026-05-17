@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ConfirmDialogConfig, CONFIRM_DIALOG_DEFAULTS } from './confirm-dialog.model';
-import { DialogState } from './DialogState.model';
+import { DialogState } from './dialog-state.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfirmDialogService {

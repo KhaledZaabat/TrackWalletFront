@@ -1,14 +1,17 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { UserStore } from "./initializer/user.store";
-import { inject } from "@angular/core";
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { UserStore } from './user.store';
 
+/**
+ * Blocks access to guest-only routes (login, home/landing).
+ * Redirects authenticated users to /dashboard.
+ */
 export const guestGuard: CanActivateFn = () => {
   const userStore = inject(UserStore);
-  const router    = inject(Router);
+  const router = inject(Router);
 
   if (userStore.isAuthenticated()) {
-    return router.createUrlTree(['/dashboard']); 
+    return router.createUrlTree(['/dashboard']);
   }
-
-  return true; 
+  return true;
 };

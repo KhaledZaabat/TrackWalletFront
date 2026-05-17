@@ -12,7 +12,7 @@ import { CharacterComponent } from './character/character';
    viewProviders: [provideIcons({ gameCoins, })]
 
 })
-export class Homecomponent {
+export class HomeComponent {
 
 readonly party = signal([
   { headColor: '#FFD700', bodyColor: '#BD93F9', label: 'Warrior'  },

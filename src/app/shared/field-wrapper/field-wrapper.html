@@ -1,10 +1,13 @@
-<label>{{ label() }}: @if(required()) { * } </label>
+<label> {{label()}} : @if (required()) { * }</label>
 <ng-content />
+
 @if (hasMinWords()) {
-    <div class="hint">
-        Minimum {{minWords()}} Words
-    </div>
+  <div class="hint">Minimum {{minWords()}}   Words</div>
 }
-@for(err of errors(); track err.kind) {
-<div class="error">{{ err.message }}</div>
+@if (hasMinChars()) {
+  <div class="hint">Minimum  {{minChars()}}  Characters</div>
+}
+
+@for (err of visibleErrors(); track err.kind) {
+  <div class="error"> {{err.message}} </div>
 }

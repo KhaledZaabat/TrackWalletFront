@@ -1,5 +1,5 @@
 export interface MeResponse {
-  id: string; // Guid
+  userId: string; // Guid
   email: string;
   userName: string;
   fullName: string;

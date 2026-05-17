@@ -13,16 +13,19 @@
 
         <form class="auth__form" [formRoot]="loginForm">
 
+          <!-- Form-level banner (server errors, success, info...) -->
+          <app-form-banner [state]="banner" />
+
           <!-- EMAIL -->
-          <app-field label="EMAIL ADDRESS">
+          <app-field label="EMAIL ADDRESS OR USERNAME">
             <input
               class="pixel-input"
               id="login-email"
               type="email"
               placeholder="player@guild.io"
               autocomplete="email"
-              [formField]="loginForm.email"
-              [formFieldDir]="loginForm.email"
+              [formField]="loginForm.emailOrUsername"
+              [formFieldDir]="loginForm.emailOrUsername"
             />
           </app-field>
 
@@ -70,13 +73,17 @@
             <a href="#forgot" class="auth__link font-pixel">FORGOT PASSWORD? ►</a>
           </div>
 
-          @if (loginForm().submitting()) {
-            <div class="font-pixel">⏳ PLEASE WAIT...</div>
+          @if (submitting()) {
+            <div class="font-pixel auth__pending">⏳ PLEASE WAIT...</div>
           }
 
           <!-- SUBMIT -->
-          <button class="pixel-btn pixel-btn--gold auth__submit font-pixel" type="submit">
-            ► LOGIN
+          <button
+            class="pixel-btn pixel-btn--gold auth__submit font-pixel"
+            type="submit"
+            [disabled]="submitting()"
+          >
+            @if (submitting()) { ► LOGGING IN... } @else { ► LOGIN }
           </button>
 
           <!-- DIVIDER -->

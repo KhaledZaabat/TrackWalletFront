@@ -1,32 +1,46 @@
-import { ApplicationConfig, inject, Injector, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  inject,
+  Injector,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { provideHttpClient, withFetch, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
-import { credentialsInterceptor } from './core/interceptors';
+import {
+  authInterceptor,
+  credentialsInterceptor,
+  csrfInterceptor,
+  errorInterceptor,
+} from './core/interceptors';
 import { authInitializer } from './core/auth';
-import { authInterceptor } from './core/interceptors/auth.interceptor';
-
+import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+
     provideRouter(routes, withComponentInputBinding()),
 
     provideHttpClient(
       withFetch(),
-      withInterceptors([credentialsInterceptor, authInterceptor]),
-      withXsrfConfiguration({
-        cookieName: 'XSRF-TOKEN',
-        headerName: 'X-XSRF-TOKEN',
-      })
+      withInterceptors([
+        credentialsInterceptor,
+        csrfInterceptor,
+        authInterceptor,
+        errorInterceptor,
+      ]),
     ),
 
     provideAppInitializer(() => {
       const injector = inject(Injector);
       return authInitializer(injector)();
     }),
-  ]
+  ],
 };
