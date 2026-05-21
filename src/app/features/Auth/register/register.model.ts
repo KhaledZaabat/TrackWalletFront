@@ -12,7 +12,7 @@ export interface RegisterFormModel {
 
   isMale: boolean;
 
-  birthDate: Date;
+  birthDate: string;
 
   profileImage: File | null;
 }
@@ -25,20 +25,19 @@ export interface RegisterRequest {
 
   isMale: boolean;
 
-  birthDate: Date;
+  birthDate: string;
 
   profileImage: File | null;
 }
 
-
 export function toRegisterRequest(model: RegisterFormModel): RegisterRequest {
   return {
-    fullName: model.fullName,
-    email: model.email,
-    userName: model.username,
-    password: model.passwordForm.password,
-    isMale: model.isMale,
-    birthDate: model.birthDate,
-    profileImage: model.profileImage
+    fullName:     model.fullName,
+    email:        model.email,
+    userName:     model.username,
+    password:     model.passwordForm.password,
+    isMale:       model.isMale,
+    birthDate:    model.birthDate,
+    profileImage: model.profileImage,
   };
 }

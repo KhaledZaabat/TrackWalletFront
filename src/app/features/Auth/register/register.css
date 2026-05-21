@@ -36,14 +36,6 @@
   border-left: none;
 }
 
-/* ── Birth date grid ─────────────────────────────────────── */
-.auth__date-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-top: 4px;
-}
-
 /* ── Gender selector ─────────────────────────────────────── */
 .auth__gender-grid {
   display: grid;

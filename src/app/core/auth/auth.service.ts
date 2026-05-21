@@ -28,14 +28,15 @@ export class AuthService {
       .set(SUPPRESS_TOAST, true);
     return this.api.post<User>('/identity/login', credentials, { context: ctx });
   }
-register(req: RegisterRequest): Observable<void> {
+
+  register(req: RegisterRequest): Observable<void> {
     const fd = new FormData();
     fd.append('Email',     req.email);
     fd.append('Password',  req.password);
     fd.append('UserName',  req.userName);
     fd.append('FullName',  req.fullName);
-    fd.append('BirthDate', this.toIsoDate(req.birthDate));  
-    fd.append('IsMale',    String(req.isMale));           
+    fd.append('BirthDate', req.birthDate);              // already ISO "yyyy-MM-dd"
+    fd.append('IsMale',    String(req.isMale));
 
     if (req.profileImage) {
       fd.append('ProfileImage', req.profileImage, req.profileImage.name);
@@ -44,18 +45,7 @@ register(req: RegisterRequest): Observable<void> {
     return this.api.post<void>('/identity/register', fd);
   }
 
- 
   logout(): Observable<void> {
     return this.api.post<void>('/identity/logout', {});
   }
-
-
-
-   private toIsoDate(d: Date): string {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
-  }
-
 }

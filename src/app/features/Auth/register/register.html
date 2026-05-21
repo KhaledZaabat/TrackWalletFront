@@ -69,31 +69,15 @@
 
             <!-- Birth date -->
             <div class="auth__field">
-              <label class="pixel-input-label" id="reg-birth-label">BIRTH DATE</label>
-              <div class="auth__date-grid" role="group" aria-labelledby="reg-birth-label">
-
-                <select class="pixel-input" aria-label="Day"
-                        [value]="day()" (change)="onDayChange($event)">
-                  @for (d of days(); track d) {
-                    <option [value]="d">{{ d }}</option>
-                  }
-                </select>
-
-                <select class="pixel-input" aria-label="Month"
-                        [value]="month()" (change)="onMonthChange($event)">
-                  @for (m of months; track m.value) {
-                    <option [value]="m.value">{{ m.label }}</option>
-                  }
-                </select>
-
-                <select class="pixel-input" aria-label="Year"
-                        [value]="year()" (change)="onYearChange($event)">
-                  @for (y of years(); track y) {
-                    <option [value]="y">{{ y }}</option>
-                  }
-                </select>
-
-              </div>
+              <app-field label="BIRTH DATE">
+              <input
+                class="pixel-input"
+                id="reg-birth"
+                type="date"
+                [formField]="registerForm.birthDate"
+                [formFieldDir]="registerForm.birthDate"
+              />
+              </app-field>
             </div>
 
             <!-- Gender -->

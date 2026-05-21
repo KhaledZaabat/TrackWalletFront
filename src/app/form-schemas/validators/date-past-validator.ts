@@ -1,10 +1,20 @@
-import { SchemaPath, SchemaPathRules, validate, ValidationError } from "@angular/forms/signals";
+import { SchemaPath, validate } from '@angular/forms/signals';
 
-export function dateInPast(path: SchemaPath<Date | null, SchemaPathRules.Supported>) {
-  validate(path, (ctx) => {
-    const value = ctx.value();
-    if (!(value instanceof Date)) return null;
-    if (value > new Date()) return { kind: 'custom', message: 'Date cannot be in the future.' } as ValidationError;
-    return null;
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function dateInPast(path: SchemaPath<string>) {
+  validate(path, ({ value }) => {
+    const v = value();
+    if (!v || !ISO_DATE.test(v)) return null;
+
+    const today = new Date();
+    const todayIso =
+      `${today.getFullYear()}-` +
+      `${String(today.getMonth() + 1).padStart(2, '0')}-` +
+      `${String(today.getDate()).padStart(2, '0')}`;
+
+    return v > todayIso
+      ? { kind: 'date-future', message: 'Date cannot be in the future.' }
+      : null;
   });
 }
