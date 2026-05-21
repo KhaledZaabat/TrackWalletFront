@@ -1,21 +1,21 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { form, FormField, FormRoot } from '@angular/forms/signals';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { LoginCredentials } from './login.model';
-import { FieldWrapper } from '../../shared/field-wrapper/field-wrapper';
-import { FieldStyleDirective } from '../../shared/directives/field-styling.directive';
-import { FormBanner, useFormBanner } from '../../shared/form-banner';
-import { loginSchema } from '../../form-schemas';
-import { UserStore } from '../../core/auth';
-import { isApiError } from '../../shared/helpers';
-import { ToastService } from '../../shared/toast';
+import { FieldWrapper } from '../../../shared/field-wrapper/field-wrapper';
+import { FieldStyleDirective } from '../../../shared/directives/field-styling.directive';
+import { FormBanner, useFormBanner } from '../../../shared/form-banner';
+import { loginSchema } from '../../../form-schemas';
+import { isApiError } from '../../../shared/helpers';
+import { ToastService } from '../../../shared/toast';
+import { UserStore } from '../../../core/auth';
 
 @Component({
   selector: 'app-login',
-  imports: [FormField, FormRoot, FieldWrapper, FieldStyleDirective, FormBanner],
+  imports: [FormField, FormRoot, FieldWrapper, FieldStyleDirective, FormBanner, RouterLink],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['../shared/auth-shared.css', './login.css'],
 })
 export class LoginComponent {
   private readonly userStore = inject(UserStore);

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { UserStore } from './user.store';
+import { UserStore } from './store/user.store';
 
 /**
  * Blocks access to authenticated-only routes.

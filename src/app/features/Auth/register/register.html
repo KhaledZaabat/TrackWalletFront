@@ -1,0 +1,164 @@
+<div class="auth-shell starfield scanlines">
+  <div class="auth-shell__inner">
+
+    <section class="auth-screen auth-screen--wide" id="register" aria-labelledby="register-title">
+      <div class="pixel-card pixel-card--gold pixel-card--corners">
+        <span class="corner-bl"></span>
+        <span class="corner-br"></span>
+
+        <header class="auth__header">
+          <h1 class="auth__title font-pixel" id="register-title">► NEW PLAYER</h1>
+          <p class="auth__subtitle font-rpg">FORGE YOUR CHARACTER</p>
+        </header>
+
+        <form class="auth__form auth__form--scrollable" [formRoot]="registerForm">
+
+          <!-- ◆ IDENTITY -->
+          <div class="auth__section">
+            <h2 class="auth__section-title font-pixel">◆ IDENTITY</h2>
+
+            <app-field label="FULL NAME">
+              <input
+                class="pixel-input"
+                id="reg-name"
+                type="text"
+                placeholder="John Smith"
+                autocomplete="name"
+                [formField]="registerForm.fullName"
+                [formFieldDir]="registerForm.fullName"
+              />
+            </app-field>
+
+            <app-field label="USERNAME">
+              <div class="auth__username-wrap">
+                <span class="auth__username-prefix font-pixel" aria-hidden="true">&#64;</span>
+                <input
+                  class="pixel-input auth__username-input"
+                  id="reg-username"
+                  type="text"
+                  placeholder="herojohn"
+                  autocomplete="username"
+                  [formField]="registerForm.username"
+                  [formFieldDir]="registerForm.username"
+                />
+              </div>
+            </app-field>
+
+            <app-field label="EMAIL ADDRESS">
+              <input
+                class="pixel-input"
+                id="reg-email"
+                type="email"
+                placeholder="player@guild.io"
+                autocomplete="email"
+                [formField]="registerForm.email"
+                [formFieldDir]="registerForm.email"
+              />
+            </app-field>
+          </div>
+
+          <!-- ◆ SECURITY -->
+          <div class="auth__section">
+            <h2 class="auth__section-title font-pixel">◆ SECURITY</h2>
+            <app-password [fields]="registerForm.passwordForm" />
+          </div>
+
+          <!-- ◆ CHARACTER -->
+          <div class="auth__section">
+            <h2 class="auth__section-title font-pixel">◆ CHARACTER</h2>
+
+            <!-- Birth date -->
+            <div class="auth__field">
+              <label class="pixel-input-label" id="reg-birth-label">BIRTH DATE</label>
+              <div class="auth__date-grid" role="group" aria-labelledby="reg-birth-label">
+
+                <select class="pixel-input" aria-label="Day"
+                        [value]="day()" (change)="onDayChange($event)">
+                  @for (d of days(); track d) {
+                    <option [value]="d">{{ d }}</option>
+                  }
+                </select>
+
+                <select class="pixel-input" aria-label="Month"
+                        [value]="month()" (change)="onMonthChange($event)">
+                  @for (m of months; track m.value) {
+                    <option [value]="m.value">{{ m.label }}</option>
+                  }
+                </select>
+
+                <select class="pixel-input" aria-label="Year"
+                        [value]="year()" (change)="onYearChange($event)">
+                  @for (y of years(); track y) {
+                    <option [value]="y">{{ y }}</option>
+                  }
+                </select>
+
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="auth__field">
+              <label class="pixel-input-label" id="reg-gender-label">GENDER</label>
+              <div class="auth__gender-grid" role="group" aria-labelledby="reg-gender-label">
+                <button class="auth__gender-btn font-pixel" type="button"
+                        [class.auth__gender-btn--active]="registerModel().isMale"
+                        [attr.aria-pressed]="registerModel().isMale"
+                        (click)="setGender(true)">♂ MALE</button>
+                <button class="auth__gender-btn font-pixel" type="button"
+                        [class.auth__gender-btn--active]="!registerModel().isMale"
+                        [attr.aria-pressed]="!registerModel().isMale"
+                        (click)="setGender(false)">♀ FEMALE</button>
+              </div>
+            </div>
+
+            <!-- Sprite upload (optional) -->
+            <div class="auth__field">
+              <label class="pixel-input-label" for="reg-sprite">UPLOAD SPRITE (OPTIONAL)</label>
+
+              <div class="auth__sprite-wrap">
+                <label
+                  class="auth__sprite-upload"
+                  [class.auth__sprite-upload--has-image]="!!imagePreview()"
+                  for="reg-sprite"
+                  aria-label="Upload character sprite"
+                >
+                  @if (imagePreview(); as src) {
+                    <img class="auth__sprite-preview" [src]="src" alt="Character sprite preview" />
+                  } @else {
+                    <span class="auth__sprite-placeholder font-pixel" aria-hidden="true">◉</span>
+                  }
+
+                  <input type="file" id="reg-sprite" accept="image/*"
+                         class="auth__sprite-input"
+                         (change)="onFileChange($event)" />
+                </label>
+
+                @if (imagePreview()) {
+                  <button class="auth__sprite-remove font-pixel"
+                          type="button"
+                          aria-label="Remove sprite"
+                          (click)="removeImage($event)">✕</button>
+                }
+              </div>
+
+              <p class="auth__sprite-hint font-pixel">96 × 96 PNG</p>
+            </div>
+          </div>
+
+          <button class="pixel-btn pixel-btn--gold auth__submit font-pixel"
+                  type="submit"
+                  [disabled]="registerForm().submitting()">
+            {{ registerForm().submitting() ? '► CREATING...' : '► CREATE ACCOUNT' }}
+          </button>
+
+          <div class="auth__link-row auth__link-row--center">
+            <span class="auth__link-preamble font-pixel">ALREADY A PLAYER?</span>
+            <a routerLink="/login" class="auth__link font-pixel">LOG IN ►</a>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </div>
+</div>

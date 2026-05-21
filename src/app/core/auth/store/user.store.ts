@@ -8,20 +8,13 @@ import {
   patchState,
 } from '@ngrx/signals';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { initialState, UserState } from './user-state';
+import { AuthService } from '..';
+import { isApiError } from '../../../shared/helpers';
+import { markAuthenticated, markIdle, markLoading, markUnauthenticated } from './user-updaters';
+import { RegisterRequest } from '../../../features/Auth/register/register.model';
 
-import { MeResponse } from './models/me-response.model';
-import { AuthService } from './auth.service';
-import { isApiError } from '../../shared/helpers';
 
-type UserState = {
-  user: MeResponse | null;
-  status: 'idle' | 'loading' | 'loaded' | 'unauthenticated';
-};
-
-const initialState: UserState = {
-  user: null,
-  status: 'idle',
-};
 
 export const UserStore = signalStore(
   { providedIn: 'root' },
@@ -36,14 +29,14 @@ export const UserStore = signalStore(
   withMethods((store, auth = inject(AuthService)) => ({
 
     async load(): Promise<void> {
-      patchState(store, { status: 'loading' });
+      patchState(store, markLoading());
 
       try {
         const user = await firstValueFrom(auth.me());
-        patchState(store, { user, status: 'loaded' });
+        patchState(store, markAuthenticated(user));
       } catch (err: unknown) {
         if (isApiError(err) && err.status === 401) {
-          patchState(store, { user: null, status: 'unauthenticated' });
+          patchState(store, markUnauthenticated());
           return;
         }
         throw err;
@@ -51,15 +44,15 @@ export const UserStore = signalStore(
     },
 
     async login(emailOrUsername: string, password: string): Promise<void> {
-      patchState(store, { status: 'loading' });
+      patchState(store, markLoading());
 
       try {
         const user = await firstValueFrom(
           auth.login({ emailOrUsername, password }),
         );
-        patchState(store, { user, status: 'loaded' });
+        patchState(store, markAuthenticated(user));
       } catch (err: unknown) {
-        patchState(store, { user: null, status: 'unauthenticated' });
+        patchState(store, markUnauthenticated());
         throw err;
       }
     },
@@ -68,13 +61,23 @@ export const UserStore = signalStore(
       try {
         await firstValueFrom(auth.logout());
       } finally {
-        patchState(store, { user: null, status: 'unauthenticated' });
+        patchState(store, markUnauthenticated());
       }
     },
 
     clear(): void {
-      patchState(store, { user: null, status: 'unauthenticated' });
+      patchState(store, markUnauthenticated());
     },
+     async register(req: RegisterRequest): Promise<void> {
+    patchState(store, markLoading());
+    try {
+      await firstValueFrom(auth.register(req));
+      patchState(store, markIdle());
+    } catch (err) {
+      patchState(store,  markUnauthenticated());
+      throw err;
+    }
+  }
 
   })),
 );

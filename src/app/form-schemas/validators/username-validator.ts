@@ -5,6 +5,7 @@ import {
   debounce,
 } from '@angular/forms/signals';
 import { environment } from '../../environments/environment';
+import { minChars } from './min-chars-validator';
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_-]{2,19}$/;
 
@@ -20,7 +21,7 @@ export function username(path: SchemaPath<string>): void {
       message: 'Enter a valid username',
     };
   });
-
+  minChars(path,3);
   debounce(path, 300);
 
   validateHttp(path, {

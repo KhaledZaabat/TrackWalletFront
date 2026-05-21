@@ -1,0 +1,268 @@
+/* ============================================================
+   Shared Auth Styles
+   ------------------------------------------------------------
+   Anything reused by 2+ auth screens lives here.
+   Component CSS files only contain rules unique to that screen.
+   ============================================================ */
+
+/* ── Page shell ──────────────────────────────────────────── */
+.auth-shell {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-shell__inner {
+  width: 100%;
+  max-width: 620px;
+}
+
+/* ── Screen ──────────────────────────────────────────────── */
+.auth-screen {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.auth-screen--wide { max-width: 620px; }
+
+/* ── Header ──────────────────────────────────────────────── */
+.auth__header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth__title {
+  font-size: 14px;
+  color: var(--color-gold);
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+.auth__subtitle {
+  font-size: 18px;
+  color: var(--color-text-muted);
+}
+
+.auth__big-icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+/* ── Centered layout (success / confirmation screens) ────── */
+.auth__centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.auth__body {
+  font-size: 20px;
+  color: var(--color-text);
+}
+
+.auth__xp {
+  font-size: 8px;
+  color: var(--color-primary);
+  letter-spacing: 0.1em;
+}
+
+/* ── Form ────────────────────────────────────────────────── */
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth__form--scrollable {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* ── Field ───────────────────────────────────────────────── */
+.auth__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth__field--full { width: 100%; }
+
+/* ── Password input row ──────────────────────────────────────
+   The wrap is a flex row with stretched children so the input
+   and the show/hide button always share the same height.
+   `align-items: stretch` (default) + a fixed control height on
+   the input itself keeps the toggle button in lockstep.
+   ------------------------------------------------------------ */
+
+:host {
+  /* Single source of truth for the password control height. */
+  --auth-control-h: 44px;
+  --auth-toggle-w: 56px;
+}
+
+.auth__password-wrap {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: var(--auth-control-h);
+}
+
+.auth__password-input {
+  flex: 1 1 auto;
+  min-width: 0;          /* allow shrink in narrow layouts */
+  height: 100%;
+  border-right: none;
+}
+
+/* Show/hide toggle — single row layout, no content reflow. */
+.auth__show-btn {
+  flex: 0 0 var(--auth-toggle-w);
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
+  background: var(--bg-input);
+  color: var(--color-primary);
+  border: 2px solid var(--border-pixel);
+  border-left: 2px dashed var(--border-pixel);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: var(--transition-pixel);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.auth__show-btn:hover,
+.auth__show-btn:focus-visible {
+  background: var(--color-primary);
+  color: var(--bg-void);
+  outline: none;
+}
+
+.auth__show-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.auth__show-btn .font-pixel {
+  font-size: 7px;
+  line-height: 1;
+}
+
+/* ── Password strength bar ──────────────────────────────────
+   Sits directly under the password input with consistent gap.
+   ------------------------------------------------------------ */
+.auth__strength {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.auth__strength-bars {
+  display: flex;
+  gap: 4px;
+}
+
+.auth__strength-bar {
+  flex: 1;
+  height: 6px;
+  border: 1px solid #000;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 120ms ease;
+}
+
+.auth__strength-bar--filled { background: var(--color-red); }
+
+/* Optional level variants — set the highest matched class */
+.auth__strength-bar--weak   { background: var(--color-red); }
+.auth__strength-bar--fair   { background: var(--color-amber); }
+.auth__strength-bar--good   { background: var(--color-primary); }
+.auth__strength-bar--strong { background: var(--color-green); }
+
+.auth__strength-label              { font-size: 8px; }
+.auth__strength-label--weak        { color: var(--color-red); }
+.auth__strength-label--fair        { color: var(--color-amber); }
+.auth__strength-label--good        { color: var(--color-primary); }
+.auth__strength-label--strong      { color: var(--color-green); }
+
+/* ── Submit ──────────────────────────────────────────────── */
+.auth__submit { width: 100%; }
+
+/* ── Pending hint ────────────────────────────────────────── */
+.auth__pending {
+  font-size: 9px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ── Link rows ───────────────────────────────────────────── */
+.auth__link-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth__link-row--center { justify-content: center; }
+.auth__link-row--right  { justify-content: flex-end; }
+
+.auth__link-preamble {
+  font-size: 9px;
+  color: var(--color-text-muted);
+}
+
+.auth__link {
+  font-size: 9px;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: var(--transition-pixel);
+  cursor: pointer;
+}
+
+.auth__link:hover { transform: translateY(-1px); }
+
+/* ── Error & tip banners ─────────────────────────────────── */
+.auth__error {
+  font-size: 8px;
+  padding: 8px 12px;
+  border: 2px solid var(--color-red);
+  color: var(--color-red);
+  background: rgba(255, 59, 59, 0.1);
+}
+
+.auth__tip {
+  font-size: 8px;
+  padding: 8px 12px;
+  border: 2px solid var(--color-amber);
+  color: var(--color-amber);
+  background: rgba(255, 184, 0, 0.08);
+  text-align: left;
+  width: 100%;
+}
+
+/* ── Email display (e.g. forgot password confirmation) ───── */
+.auth__email-display {
+  font-size: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  background: var(--bg-input);
+  border: 2px solid var(--border-pixel);
+  color: var(--color-primary);
+  word-break: break-all;
+  text-align: center;
+}
+
+.auth__confirm-bar {
+  width: 100%;
+  max-width: 320px;
+}

@@ -10,7 +10,9 @@ import { MIN_CHARS } from '../../form-schemas/validators/min-chars-validator';
   styleUrl: './field-wrapper.css',
 })
 export class FieldWrapper<T> {
-  readonly label = input('');
+  readonly label         = input('');
+  readonly disableErrors = input<boolean>(false);        
+
   readonly formField = contentChild.required<FormField<T>>(FormField);
 
   readonly fieldState: Signal<FieldState<T>> = computed(() =>
@@ -22,16 +24,16 @@ export class FieldWrapper<T> {
   readonly touched  = computed(() => this.fieldState().touched());
   readonly dirty    = computed(() => this.fieldState().dirty());
 
-  /** Only show errors after user has interacted with the field */
-  readonly visibleErrors = computed(() =>
-    this.touched() || this.dirty() ? this.errors() : [],
-  );
+  readonly visibleErrors = computed(() => {
+    if (this.disableErrors()) return [];                 
+    return this.touched() || this.dirty() ? this.errors() : [];
+  });
 
   private readonly showHints = computed(() => !this.touched() && !this.dirty());
 
-  readonly minWords = computed(() => this.fieldState().metadata(MIN_WORDS)?.() ?? 0);
+  readonly minWords    = computed(() => this.fieldState().metadata(MIN_WORDS)?.() ?? 0);
   readonly hasMinWords = computed(() => this.minWords() > 0 && this.showHints());
 
-  readonly minChars = computed(() => this.fieldState().metadata(MIN_CHARS)?.() ?? 0);
+  readonly minChars    = computed(() => this.fieldState().metadata(MIN_CHARS)?.() ?? 0);
   readonly hasMinChars = computed(() => this.minChars() > 0 && this.showHints());
 }

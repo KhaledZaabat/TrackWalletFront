@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { UserStore } from './user.store';
+import { UserStore } from './store/user.store';
 
 /**
  * Loads the current user once at app startup so guards have an

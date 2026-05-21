@@ -1,0 +1,189 @@
+/* ============================================================
+   Register Screen — register-specific rules only.
+   Shared rules come from ../shared/auth-shared.css
+   ============================================================ */
+
+/* ── Section headings ────────────────────────────────────── */
+.auth__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth__section-title {
+  font-size: 10px;
+  color: var(--color-amber);
+  margin: 0;
+}
+
+/* ── Username (with @ prefix) ────────────────────────────── */
+.auth__username-wrap {
+  display: flex;
+}
+
+.auth__username-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: var(--bg-input);
+  border: 2px solid var(--border-pixel);
+  border-right: none;
+  color: var(--color-amber);
+  font-size: 14px;
+}
+
+.auth__username-input {
+  border-left: none;
+}
+
+/* ── Birth date grid ─────────────────────────────────────── */
+.auth__date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ── Gender selector ─────────────────────────────────────── */
+.auth__gender-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.auth__gender-btn {
+  font-size: 10px;
+  padding: 12px;
+  border: 2px solid var(--border-pixel);
+  background: transparent;
+  color: var(--color-text-muted);
+  box-shadow: var(--shadow-pixel-sm);
+  cursor: pointer;
+  transition: var(--transition-pixel);
+}
+
+.auth__gender-btn--active {
+  border-color: var(--border-gold);
+  background: rgba(189, 147, 249, 0.15);
+  color: var(--color-gold);
+}
+
+/* ── Sprite upload ───────────────────────────────────────── */
+
+/* Wraps the upload box so the remove button can sit absolutely
+   without depending on the <label> element's positioning. */
+.auth__sprite-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin-top: 4px;
+}
+
+.auth__sprite-upload {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--border-pixel);
+  background: var(--bg-input);
+  cursor: pointer;
+  overflow: hidden;          /* clip oversized previews */
+  transition: var(--transition-pixel);
+}
+
+.auth__sprite-upload:hover {
+  border-color: var(--color-gold);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+/* Solid border when an image is loaded — visually distinct from empty state */
+.auth__sprite-upload--has-image {
+  border-style: solid;
+  border-color: var(--border-pixel);
+}
+
+.auth__sprite-placeholder {
+  font-size: 20px;
+  color: var(--color-primary);
+  transition: transform 120ms ease;
+}
+
+.auth__sprite-upload:hover .auth__sprite-placeholder {
+  transform: scale(1.1);
+  color: var(--color-gold);
+}
+
+/* Image preview — fills the box, preserves aspect, pixelated rendering */
+.auth__sprite-preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Hidden native file input — accessible but invisible */
+.auth__sprite-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Remove button — anchored to top-right corner, sits OUTSIDE the
+   upload label so its click doesn't trigger the file picker. */
+.auth__sprite-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+  background: var(--color-red);
+  border: 2px solid #000;
+  box-shadow: var(--shadow-pixel-sm);
+  cursor: pointer;
+  transition: var(--transition-pixel);
+  z-index: 2;
+}
+
+.auth__sprite-remove:hover,
+.auth__sprite-remove:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #000;
+  background: #ff5555;
+  outline: none;
+}
+
+.auth__sprite-remove:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.auth__sprite-hint {
+  font-size: 8px;
+  color: var(--color-gray);
+  margin-top: 4px;
+}
+
+

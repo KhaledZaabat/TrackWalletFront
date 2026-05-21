@@ -1,4 +1,4 @@
-export interface MeResponse {
+export interface User {
   userId: string; // Guid
   email: string;
   userName: string;
