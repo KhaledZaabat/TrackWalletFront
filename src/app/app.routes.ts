@@ -21,6 +21,12 @@ export const routes: Routes = [
       .then(m => m.RegisterComponent)
   },
   {
+  path: 'confirmation-email-sent',
+  canActivate: [guestGuard],
+  loadComponent: () => import('./features/Auth/email-sent/email-sent')
+    .then(m => m.ConfirmationEmailSentComponent)
+  },
+  {
     path: '',
     canActivate: [authGuard],
     children: [

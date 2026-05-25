@@ -1,9 +1,4 @@
-/* ============================================================
-   Shared Auth Styles
-   ------------------------------------------------------------
-   Anything reused by 2+ auth screens lives here.
-   Component CSS files only contain rules unique to that screen.
-   ============================================================ */
+
 
 /* ── Page shell ──────────────────────────────────────────── */
 .auth-shell {

@@ -59,7 +59,6 @@ export class LoginComponent {
 
   private toUserMessage(err: unknown): string {
     if (!isApiError(err)) return 'Something went wrong. Please try again.';
-    if (err.status === 401) return 'Invalid email/username or password.';
     if (err.status === 0)   return 'Unable to reach the server. Check your connection.';
     if (err.status === 429) return 'Too many attempts. Please wait a moment and try again.';
     if (err.status >= 500)  return 'Server error. Please try again later.';

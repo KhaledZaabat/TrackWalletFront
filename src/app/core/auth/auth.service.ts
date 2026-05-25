@@ -6,6 +6,7 @@ import { SKIP_AUTH_REDIRECT } from '../interceptors/auth.interceptor';
 import { SUPPRESS_TOAST } from '../interceptors/error.interceptor';
 import { User } from './models/me-response.model';
 import { RegisterRequest } from '../../features/Auth/register/register.model';
+import { ComfirmEmailRequest } from './confirm-email-request';
 
 export interface LoginRequest {
   emailOrUsername: string;
@@ -35,7 +36,7 @@ export class AuthService {
     fd.append('Password',  req.password);
     fd.append('UserName',  req.userName);
     fd.append('FullName',  req.fullName);
-    fd.append('BirthDate', req.birthDate);              // already ISO "yyyy-MM-dd"
+    fd.append('BirthDate', req.birthDate);            
     fd.append('IsMale',    String(req.isMale));
 
     if (req.profileImage) {
@@ -44,7 +45,11 @@ export class AuthService {
 
     return this.api.post<void>('/identity/register', fd);
   }
+  resendConfirmationLink(request:ComfirmEmailRequest):Observable<void>{
 
+return this.api.post<void>("/identity/confirm-account/email/resend",request,{});
+
+  }
   logout(): Observable<void> {
     return this.api.post<void>('/identity/logout', {});
   }

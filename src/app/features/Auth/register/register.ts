@@ -8,7 +8,7 @@ import { useFormBanner } from '../../../shared/form-banner';
 import { FieldWrapper } from '../../../shared/field-wrapper/field-wrapper';
 import { FieldStyleDirective } from '../../../shared/directives/field-styling.directive';
 import { PasswordFormComponent } from '../password-form/password-form';
-import { toIsoDate } from '../../../shared/helpers';
+import { isApiError, toIsoDate } from '../../../shared/helpers';
 
 import { RegisterFormModel, toRegisterRequest } from './register.model';
 import { registerSchema } from '../../../form-schemas/schemas/register-schema';
@@ -46,10 +46,15 @@ export class RegisterComponent {
         try {
           await this.userStore.register(toRegisterRequest(this.registerModel()));
           this.toast.success('Welcome, hero!');
-          const target = this.route.snapshot.queryParamMap.get('redirectTo') ?? '/dashboard';
-          await this.router.navigateByUrl(target);
-        } catch {
-          // banner.error(...) once AuthService surfaces ApiError
+          const target = this.route.snapshot.queryParamMap.get('redirectTo');
+
+          if (target) {
+            await this.router.navigateByUrl(target);
+              } else {
+              await this.router.navigate(['/confirmation-email-sent'], { queryParams: { email: t.email().value() }});
+              }
+        } catch (err: unknown) {
+          this.banner.error(this.toUserMessage(err));
         }
       },
     },
@@ -77,4 +82,13 @@ export class RegisterComponent {
     this.imagePreview.set(null);
     this.registerModel.update((m) => ({ ...m, profileImage: null }));
   }
+
+
+  private toUserMessage(err: unknown): string {
+      if (!isApiError(err)) return 'Something went wrong. Please try again.';
+      if (err.status === 0)   return 'Unable to reach the server. Check your connection.';
+      if (err.status === 429) return 'Too many attempts. Please wait a moment and try again.';
+      if (err.status >= 500)  return 'Server error. Please try again later.';
+      return err.title || 'Register failed. Please try again.';
+    }
 }

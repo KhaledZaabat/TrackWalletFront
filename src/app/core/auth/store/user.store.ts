@@ -56,7 +56,16 @@ export const UserStore = signalStore(
         throw err;
       }
     },
+    async resendConfirmationLink(email:string):Promise<void>{
 
+      try{
+       await firstValueFrom( auth.resendConfirmationLink({email}));
+      }catch(err:unknown){
+
+        throw err;
+      }
+
+    },
     async logout(): Promise<void> {
       try {
         await firstValueFrom(auth.logout());

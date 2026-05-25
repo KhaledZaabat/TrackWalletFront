@@ -1,0 +1,102 @@
+<div class="auth-shell starfield scanlines">
+  <div class="auth-shell__inner">
+
+    <section class="auth-screen" aria-labelledby="confirm-title">
+      <div class="pixel-card pixel-card--gold pixel-card--corners confirm-card">
+        <span class="corner-bl"></span>
+        <span class="corner-br"></span>
+
+        <!-- Animated envelope icon -->
+        <div class="confirm__icon-wrap" aria-hidden="true">
+          <div class="confirm__envelope">
+            <span class="confirm__envelope-body">✉</span>
+            <span class="confirm__sparkle confirm__sparkle--1">✦</span>
+            <span class="confirm__sparkle confirm__sparkle--2">✦</span>
+            <span class="confirm__sparkle confirm__sparkle--3">★</span>
+          </div>
+          <div class="confirm__ping-ring"></div>
+        </div>
+
+        <!-- Header -->
+        <header class="auth__header confirm__header">
+          <h1 class="auth__title font-pixel" id="confirm-title">► MAIL SENT!</h1>
+          <p class="auth__subtitle font-rpg">CONFIRMATION LINK DISPATCHED</p>
+        </header>
+
+        <!-- Body -->
+        <div class="auth__centered confirm__body">
+
+          <!-- XP gain badge -->
+          <div class="confirm__xp-badge font-pixel" aria-label="XP awarded">
+            <span class="confirm__xp-icon">⬆</span>
+            +50 XP — QUEST STEP COMPLETE
+          </div>
+
+          <!-- Description -->
+          <p class="confirm__desc font-rpg">
+            A secret scroll has been delivered to your inbox:
+          </p>
+
+          <!-- Email display -->
+          <div class="auth__email-display font-pixel confirm__email" role="status" aria-live="polite">
+            <span class="confirm__email-arrow blink" aria-hidden="true">►</span>
+            {{ email() }}
+          </div>
+
+          <!-- Instruction steps -->
+          <ol class="confirm__steps font-rpg" aria-label="Next steps">
+            <li class="confirm__step">
+              <span class="confirm__step-num font-pixel" aria-hidden="true">01</span>
+              Open your email inbox
+            </li>
+            <li class="confirm__step">
+              <span class="confirm__step-num font-pixel" aria-hidden="true">02</span>
+              Click the confirmation link inside
+            </li>
+            <li class="confirm__step">
+              <span class="confirm__step-num font-pixel" aria-hidden="true">03</span>
+              Your account will be activated!
+            </li>
+          </ol>
+
+          <!-- Tip banner -->
+          <div class="auth__tip font-rpg confirm__tip" role="note">
+            <span class="confirm__tip-icon" aria-hidden="true">⚑</span>
+            Don't see it? Check your <strong>spam folder</strong> — it may have snuck in there.
+          </div>
+
+          <!-- Resend + back actions -->
+          <div class="confirm__actions">
+            <button
+              class="pixel-btn pixel-btn--gold font-pixel confirm__resend-btn"
+              type="button"
+              [disabled]="resendCooldown() > 0"
+              (click)="resend()"
+              aria-live="polite"
+            >
+              @if (resendCooldown() > 0) {
+                ⟳ RESEND IN {{ resendCooldown() }}s
+              } @else {
+                ⟳ RESEND EMAIL
+              }
+            </button>
+
+            <a routerLink="/login" class="auth__link font-pixel confirm__back-link">
+              ◄ BACK TO LOGIN
+            </a>
+          </div>
+
+          <!-- Footer flavour text -->
+          <p class="confirm__flavour font-rpg" aria-hidden="true">
+            <span class="loading-dot">.</span>
+            <span class="loading-dot">.</span>
+            <span class="loading-dot">.</span>
+            AWAITING HERO CONFIRMATION
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
