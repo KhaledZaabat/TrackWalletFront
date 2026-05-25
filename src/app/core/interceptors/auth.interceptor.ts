@@ -8,7 +8,6 @@ import {
 import { catchError, throwError } from 'rxjs';
 import { UserStore } from '../auth';
 
-/** Set to true on a request to opt out of the 401 redirect (e.g. /me bootstrap). */
 export const SKIP_AUTH_REDIRECT = new HttpContextToken<boolean>(() => false);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {

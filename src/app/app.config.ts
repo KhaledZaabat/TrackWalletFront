@@ -19,6 +19,8 @@ import {
 } from './core/interceptors';
 import { authInitializer } from './core/auth';
 import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
+import { LOCAL_STORAGE_CONFIG } from './core/local-storage/local-storage.service';
+import { environment } from './environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,5 +44,13 @@ export const appConfig: ApplicationConfig = {
       const injector = inject(Injector);
       return authInitializer(injector)();
     }),
+
+    {
+      provide: LOCAL_STORAGE_CONFIG,
+      useValue: {
+        prefix: environment.storagePrefix,   
+        obfuscationKey: environment.storageKey  
+      }
+    }
   ],
 };
