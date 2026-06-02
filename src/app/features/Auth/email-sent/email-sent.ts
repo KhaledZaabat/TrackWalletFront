@@ -1,4 +1,4 @@
-import { Component, inject, input, signal, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal, OnDestroy, OnInit } from '@angular/core';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { UserStore } from '../../../core/auth';
 import { RouterLink } from '@angular/router';
@@ -8,7 +8,8 @@ import { LocalStorageService, TTL } from '../../../core/local-storage/local-stor
   selector: 'app-email-sent',
   imports: [RouterLink],
   templateUrl: './email-sent.html',
-  styleUrl: './email-sent.css',
+  styleUrls: ['../shared/auth-shared.css', './email-sent.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationEmailSentComponent implements OnInit, OnDestroy {
   private readonly toast    = inject(ToastService);

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { gameCoins } from '@ng-icons/game-icons';
 import { provideIcons } from '@ng-icons/core';
@@ -6,11 +6,11 @@ import { CharacterComponent } from './character/character';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink ,CharacterComponent],
+  imports: [RouterLink, CharacterComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
-   viewProviders: [provideIcons({ gameCoins, })]
-
+  viewProviders: [provideIcons({ gameCoins })],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
 

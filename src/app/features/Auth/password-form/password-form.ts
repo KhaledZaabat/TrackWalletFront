@@ -1,4 +1,4 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { FieldTree, FormField } from '@angular/forms/signals';
 import { FieldWrapper } from '../../../shared/field-wrapper/field-wrapper';
 import { FieldStyleDirective } from '../../../shared/directives/field-styling.directive';
@@ -23,6 +23,7 @@ type StrengthLevel = 'weak' | 'fair' | 'good' | 'strong';
   imports: [FormField, FieldWrapper, FieldStyleDirective],
   templateUrl: './password-form.html',
   styleUrls: ['../shared/auth-shared.css', './password-form.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PasswordFormComponent {
   readonly fields = input.required<FieldTree<PasswordForm>>();

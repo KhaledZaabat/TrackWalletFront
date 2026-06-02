@@ -1,4 +1,4 @@
-import { Component, computed, contentChild, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChild, input, Signal } from '@angular/core';
 import { FormField, FieldState } from '@angular/forms/signals';
 import { MIN_WORDS } from '../../form-schemas/validators/min-words-validator';
 import { MIN_CHARS } from '../../form-schemas/validators/min-chars-validator';
@@ -8,6 +8,7 @@ import { MIN_CHARS } from '../../form-schemas/validators/min-chars-validator';
   imports: [],
   templateUrl: './field-wrapper.html',
   styleUrl: './field-wrapper.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldWrapper<T> {
   readonly label         = input('');
