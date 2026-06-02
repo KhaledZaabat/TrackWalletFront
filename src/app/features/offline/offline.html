@@ -1,0 +1,109 @@
+<div class="offline starfield scanlines" role="main" aria-labelledby="offline-title">
+  <div class="offline__inner">
+    <!-- ── ERROR BADGE ── -->
+    <div class="offline__badge font-pixel" role="status">ERR: NETWORK_LOST</div>
+
+    <!-- ── PIXEL ART — FAINTED CHARACTER ── -->
+    <div class="offline__char-wrap" aria-hidden="true">
+      <svg
+        class="offline__char"
+        width="96"
+        height="112"
+        viewBox="0 0 48 56"
+        style="image-rendering: pixelated"
+      >
+        <rect x="16" y="2" width="16" height="14" fill="#3a3a4a" />
+        <rect x="18" y="6" width="2" height="2" fill="#ff3b3b" />
+        <rect x="22" y="6" width="2" height="2" fill="#ff3b3b" />
+        <rect x="20" y="8" width="2" height="2" fill="#ff3b3b" />
+        <rect x="26" y="6" width="2" height="2" fill="#ff3b3b" />
+        <rect x="30" y="6" width="2" height="2" fill="#ff3b3b" />
+        <rect x="28" y="8" width="2" height="2" fill="#ff3b3b" />
+        <rect x="20" y="13" width="8" height="2" fill="#0a0a14" />
+        <rect x="12" y="16" width="24" height="18" fill="#2a2a3e" />
+        <rect x="6" y="18" width="6" height="8" fill="#2a2a3e" />
+        <rect x="36" y="18" width="6" height="8" fill="#2a2a3e" />
+        <rect x="14" y="34" width="8" height="14" fill="#2a2a3e" />
+        <rect x="26" y="34" width="8" height="14" fill="#2a2a3e" />
+        <rect x="12" y="46" width="10" height="6" fill="#3a3a55" />
+        <rect x="26" y="46" width="10" height="6" fill="#3a3a55" />
+        <rect x="18" y="0" width="2" height="2" fill="#ff3b3b" opacity="0.25" />
+        <rect x="22" y="0" width="2" height="4" fill="#ff3b3b" opacity="0.15" />
+        <rect x="26" y="0" width="2" height="2" fill="#ff3b3b" opacity="0.25" />
+        <rect x="14" y="0" width="2" height="4" fill="#ff3b3b" opacity="0.1" />
+        <rect x="30" y="0" width="2" height="4" fill="#ff3b3b" opacity="0.1" />
+      </svg>
+
+      <div class="offline__fainted font-pixel" aria-hidden="true">FAINTED</div>
+    </div>
+
+    <!-- ── TITLE ── -->
+    <div class="offline__title-block">
+      <h1 class="offline__title font-pixel glitch-text" id="offline-title">CONNECTION<br />LOST</h1>
+      <p class="offline__subtitle font-rpg">SERVER UNREACHABLE — STATUS 0</p>
+    </div>
+
+    <!-- ── STATUS PANEL ── -->
+    <div
+      class="pixel-card pixel-card--danger pixel-card--corners offline__status-card"
+      role="region"
+      aria-label="System status"
+    >
+      <span class="corner-bl"></span>
+      <span class="corner-br"></span>
+
+      <div class="offline__status-heading font-pixel">► SYSTEM STATUS</div>
+
+      <ul class="offline__status-list" role="list">
+        <li class="offline__status-row">
+          <span class="offline__status-key font-rpg">CONNECTION</span>
+          <span class="offline__status-val offline__status-val--bad font-rpg blink">■ OFFLINE</span>
+        </li>
+        <li class="offline__status-row">
+          <span class="offline__status-key font-rpg">SERVER</span>
+          <span class="offline__status-val offline__status-val--bad font-rpg">UNREACHABLE</span>
+        </li>
+        <li class="offline__status-row">
+          <span class="offline__status-key font-rpg">SIGNAL</span>
+          <span class="offline__status-val font-rpg">
+            <span class="offline__signal-bar">▓░░░░░░░░░</span>&nbsp;0%
+          </span>
+        </li>
+        <li class="offline__status-row">
+          <span class="offline__status-key font-rpg">QUEST</span>
+          <span class="offline__status-val offline__status-val--amber font-rpg">⏸ SUSPENDED</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ── FLAVOR TEXT ── -->
+    <p class="offline__desc font-rpg">
+      "THE SERVER HAS GONE DARK. CHECK YOUR CONNECTION AND TRY AGAIN TO RESUME YOUR QUEST."
+    </p>
+
+    <!-- ── ACTIONS ── -->
+    <div class="offline__actions">
+      <button
+        class="pixel-btn pixel-btn--gold offline__retry font-pixel"
+        [disabled]="retrying()"
+        (click)="retry()"
+        aria-label="Retry network connection"
+      >
+        @if (retrying()) {
+        <span class="loading-dot">●</span>
+        <span class="loading-dot">●</span>
+        <span class="loading-dot">●</span>
+        CONNECTING } @else { ↻ RETRY CONNECTION }
+      </button>
+
+      <button
+        class="pixel-btn pixel-btn--ghost offline__back font-pixel"
+        [disabled]="retrying()"
+        (click)="goBack()"
+        aria-label="Go back to home"
+      >
+        ◄ GO BACK
+      </button>
+    </div>
+  </div>
+</div>

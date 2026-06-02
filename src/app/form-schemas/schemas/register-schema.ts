@@ -4,12 +4,11 @@ import { username } from '../validators/username-validator';
 import { minWords } from '../validators/min-words-validator';
 import { fileType } from '../validators/image-validator';
 import { dateInPast } from '../validators/date-past-validator';
-import { RegisterFormModel } from '../../features/Auth/register/register.model';
+import { RegisterFormModel } from '../../features/auth/register/register.model';
 
 const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
 export const registerSchema = schema<RegisterFormModel>((path) => {
-
   required(path.fullName);
   minWords(path.fullName, 2);
 

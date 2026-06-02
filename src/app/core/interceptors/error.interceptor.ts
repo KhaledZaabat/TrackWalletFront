@@ -1,14 +1,13 @@
-import {
-  HttpContextToken,
-  HttpErrorResponse,
-  HttpInterceptorFn,
-} from '@angular/common/http';
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { ToastService } from '../../shared/toast/toast.service';
 import { ApiError } from '../../shared/types';
 
 export const SUPPRESS_TOAST = new HttpContextToken<boolean>(() => false);
+
+export const SKIP_OFFLINE_REDIRECT = new HttpContextToken<boolean>(() => false);
 
 interface ApiProblem {
   type?: string;
@@ -27,6 +26,7 @@ const FALLBACK_GENERIC = 'Something went wrong. Please try again.';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toast = inject(ToastService);
+  const router = inject(Router);
 
   return next(req).pipe(
     catchError((err: unknown) => {
@@ -36,6 +36,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       // 401 is owned by authInterceptor (clear store + redirect).
       if (apiError.status === 401) return throwError(() => apiError);
+
+      // Status 0 means the request never reached the server.
+      // Navigate to the offline page unless the caller opts out.
+      if (apiError.status === 0 && !req.context.get(SKIP_OFFLINE_REDIRECT)) {
+        router.navigate(['/offline']);
+        return throwError(() => apiError);
+      }
 
       if (!req.context.get(SUPPRESS_TOAST)) toastFromError(toast, apiError);
 
@@ -78,11 +85,7 @@ function toApiError(err: unknown): ApiError {
 
     return {
       status: err.status,
-      title:
-        body.title ||
-        firstFieldMessage(fieldErrors) ||
-        err.statusText ||
-        FALLBACK_GENERIC,
+      title: body.title || firstFieldMessage(fieldErrors) || err.statusText || FALLBACK_GENERIC,
       code: body.code,
       fieldErrors,
       raw: err,

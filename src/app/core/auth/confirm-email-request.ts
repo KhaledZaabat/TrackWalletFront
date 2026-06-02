@@ -1,4 +1,3 @@
-export interface ComfirmEmailRequest{
-email:string
-
+export interface ConfirmEmailRequest {
+  email: string;
 }

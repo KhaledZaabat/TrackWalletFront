@@ -1,5 +1,6 @@
 // Schemas
 export { loginSchema } from './schemas/login-schema';
+export { registerSchema } from './schemas/register-schema';
 
 // Validators
 export { strongPassword, strongPasswordChecklist } from './validators/strong-password.validator';
