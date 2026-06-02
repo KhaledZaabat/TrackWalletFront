@@ -34,13 +34,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       const apiError = toApiError(err);
 
-      // 401 is owned by authInterceptor (clear store + redirect).
       if (apiError.status === 401) return throwError(() => apiError);
-
-      // Status 0 means the request never reached the server.
-      // Navigate to the offline page unless the caller opts out.
+      
       if (apiError.status === 0 && !req.context.get(SKIP_OFFLINE_REDIRECT)) {
         router.navigate(['/offline']);
+
         return throwError(() => apiError);
       }
 

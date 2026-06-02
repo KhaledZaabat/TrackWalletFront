@@ -45,7 +45,6 @@ export const routes: Routes = [
     ],
   },
   {
-    // No onlineGuard here — always reachable so the user can retry.
     path: 'offline',
     loadComponent: () => import('./features/offline/offline').then((m) => m.OfflineComponent),
   },

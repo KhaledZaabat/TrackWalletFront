@@ -19,9 +19,7 @@ export class AuthService {
 
   me(): Observable<User> {
     return this.api.get<User>('/identity/me', {
-      // SKIP_AUTH_REDIRECT: don't loop back to /login on 401 during boot.
-      // SKIP_OFFLINE_REDIRECT: onlineGuard handles the /offline redirect for boot;
-      //   the interceptor redirect would fire before the router is ready.
+      
       context: new HttpContext().set(SKIP_AUTH_REDIRECT, true).set(SKIP_OFFLINE_REDIRECT, true),
     });
   }
@@ -30,7 +28,7 @@ export class AuthService {
     const ctx = new HttpContext()
       .set(SKIP_AUTH_REDIRECT, true)
       .set(SUPPRESS_TOAST, true)
-      .set(SKIP_OFFLINE_REDIRECT, true); // banner handles network errors
+      .set(SKIP_OFFLINE_REDIRECT, true);
     return this.api.post<User>('/identity/login', credentials, { context: ctx });
   }
 
@@ -48,7 +46,7 @@ export class AuthService {
     }
 
     return this.api.post<void>('/identity/register', fd, {
-      context: new HttpContext().set(SKIP_OFFLINE_REDIRECT, true), // banner handles network errors
+      context: new HttpContext().set(SKIP_OFFLINE_REDIRECT, true), 
     });
   }
   resendConfirmationLink(request: ConfirmEmailRequest): Observable<void> {

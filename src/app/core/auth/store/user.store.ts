@@ -38,7 +38,6 @@ export const UserStore = signalStore(
           return;
         }
         if (isApiError(err) && err.status === 0) {
-          // Server unreachable during boot — onlineGuard will redirect to /offline.
           patchState(store, markOffline());
           return;
         }
