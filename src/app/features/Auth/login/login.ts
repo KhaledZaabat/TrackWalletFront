@@ -36,10 +36,12 @@ export class LoginComponent {
 
   readonly loginForm = form(this.loginModel, loginSchema, {
     submission: {
-      action: async (field) => {
+      action: async () => {
         this.banner.clear();
         try {
-          await this.userStore.login(field.emailOrUsername().value(), field.password().value());
+        
+
+          await this.userStore.login(this.loginModel);
           this.toast.success(`Welcome back, ${this.userStore.fullName() || 'player'}!`);
           const target = this.route.snapshot.queryParamMap.get('redirectTo') ?? '/dashboard';
           await this.router.navigateByUrl(target);

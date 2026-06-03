@@ -35,7 +35,7 @@ export class ConfirmationEmailSentComponent implements OnInit, OnDestroy {
     if (this.resendCooldown() > 0) return;
 
     try {
-      await this.userStore.resendConfirmationLink(this.email());
+      await this.userStore.resendConfirmationLink(this.email);
       this.toast.success('Confirmation email sent');
       this.startCooldown(this.COOLDOWN_DURATION);
     } catch {

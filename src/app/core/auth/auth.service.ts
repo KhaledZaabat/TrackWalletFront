@@ -6,7 +6,7 @@ import { SKIP_AUTH_REDIRECT } from '../interceptors/auth.interceptor';
 import { SKIP_OFFLINE_REDIRECT, SUPPRESS_TOAST } from '../interceptors/error.interceptor';
 import { User } from './models/me-response.model';
 import { RegisterRequest } from '../../features/auth/register/register.model';
-import { ConfirmEmailRequest } from './confirm-email-request';
+import { ConfirmEmailRequest, SendConfirmEmailRequest } from './confirm-email-request';
 
 export interface LoginRequest {
   emailOrUsername: string;
@@ -49,8 +49,11 @@ export class AuthService {
       context: new HttpContext().set(SKIP_OFFLINE_REDIRECT, true), 
     });
   }
-  resendConfirmationLink(request: ConfirmEmailRequest): Observable<void> {
+  resendConfirmationLink(request: SendConfirmEmailRequest): Observable<void> {
     return this.api.post<void>('/identity/confirm-account/email/resend', request, {});
+  }
+  confrimEmail(request:ConfirmEmailRequest):Observable<void>{
+    return this.api.post<void>('/identity/confirm-account', request, {});
   }
   logout(): Observable<void> {
     return this.api.post<void>('/identity/logout', {});

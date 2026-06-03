@@ -13,7 +13,7 @@ import { gameFemale, gameMale } from '@ng-icons/game-icons';
 import { ApiErrorMessage, toIsoDate } from '../../../shared/helpers';
 import { registerSchema } from '../../../form-schemas';
 
-import { RegisterFormModel, toRegisterRequest } from './register.model';
+import { RegisterFormModel } from './register.model';
 
 @Component({
   selector: 'app-register',
@@ -57,7 +57,7 @@ export class RegisterComponent {
       action: async (t) => {
         this.banner.clear();
         try {
-          await this.userStore.register(toRegisterRequest(this.registerModel()));
+          await this.userStore.register(this.registerModel);
           this.toast.success('Welcome, hero!');
           const target = this.route.snapshot.queryParamMap.get('redirectTo');
 

@@ -13,6 +13,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/home/home').then((m) => m.HomeComponent),
       },
       {
+      path: 'confirm-email',
+      canActivate: [guestGuard],
+       loadComponent: () =>
+      import('./features/auth/confirm-email/confirm-email').then((m) => m.ConfirmEmail),
+},
+      {
         path: 'login',
         canActivate: [guestGuard],
         loadComponent: () => import('./features/auth/login/login').then((m) => m.LoginComponent),
