@@ -19,7 +19,7 @@ export class AuthService {
 
   me(): Observable<User> {
     return this.api.get<User>('/identity/me', {
-      
+
       context: new HttpContext().set(SKIP_AUTH_REDIRECT, true).set(SKIP_OFFLINE_REDIRECT, true),
     });
   }
@@ -46,13 +46,13 @@ export class AuthService {
     }
 
     return this.api.post<void>('/identity/register', fd, {
-      context: new HttpContext().set(SKIP_OFFLINE_REDIRECT, true), 
+      context: new HttpContext().set(SKIP_OFFLINE_REDIRECT, true),
     });
   }
   resendConfirmationLink(request: SendConfirmEmailRequest): Observable<void> {
     return this.api.post<void>('/identity/confirm-account/email/resend', request, {});
   }
-  confrimEmail(request:ConfirmEmailRequest):Observable<void>{
+  confirmEmail(request: ConfirmEmailRequest): Observable<void> {
     return this.api.post<void>('/identity/confirm-account', request, {});
   }
   logout(): Observable<void> {

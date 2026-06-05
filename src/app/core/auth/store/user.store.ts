@@ -62,7 +62,7 @@ export const UserStore = signalStore(
       )
     ),
 
- 
+
     login: rxMethod<LoginCredentials>(
       pipe(
         tap(() => patchState(store, markLoading())),
@@ -87,11 +87,11 @@ export const UserStore = signalStore(
         tap(() => patchState(store, markLoading())),
 
         exhaustMap(req =>
-          auth.register( toRegisterRequest(req)).pipe(
+          auth.register(toRegisterRequest(req)).pipe(
             tapResponse({
               next: () => patchState(store, markIdle()),
               error: err => {
-                patchState(store, markUnauthenticated());
+                patchState(store, markIdle());
                 throw err;
               },
             })
@@ -100,7 +100,7 @@ export const UserStore = signalStore(
       )
     ),
 
-   
+
     logout: rxMethod<void>(
       pipe(
         exhaustMap(() =>
@@ -114,14 +114,17 @@ export const UserStore = signalStore(
       )
     ),
 
- 
+
     resendConfirmationLink: rxMethod<string>(
       pipe(
+        tap(() => patchState(store, markLoading())),
+
         exhaustMap(req =>
-          auth.resendConfirmationLink({email:req}).pipe(
+          auth.resendConfirmationLink({ email: req }).pipe(
             tapResponse({
-              next: () => {},
+              next: () => patchState(store, markIdle()),
               error: err => {
+                patchState(store, markIdle());
                 throw err;
               },
             })
@@ -130,14 +133,17 @@ export const UserStore = signalStore(
       )
     ),
 
-  
+
     confirmEmail: rxMethod<ConfirmEmailRequest>(
       pipe(
+        tap(() => patchState(store, markLoading())),
+
         exhaustMap(req =>
-          auth.confrimEmail(req).pipe(
+          auth.confirmEmail(req).pipe(
             tapResponse({
-              next: () => {},
+              next: () => patchState(store, markIdle()),
               error: err => {
+                patchState(store, markIdle());
                 throw err;
               },
             })
@@ -146,7 +152,7 @@ export const UserStore = signalStore(
       )
     ),
 
- 
+
     clear() {
       patchState(store, markUnauthenticated());
     },
