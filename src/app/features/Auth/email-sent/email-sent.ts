@@ -15,6 +15,7 @@ export class ConfirmationEmailSentComponent implements OnInit, OnDestroy {
   private readonly toast    = inject(ToastService);
   private readonly userStore = inject(UserStore);
   private readonly storage  = inject(LocalStorageService);
+  readonly resending      = signal(false);      
 
   readonly email         = input.required<string>();
   readonly resendCooldown = signal(0);
@@ -31,17 +32,20 @@ export class ConfirmationEmailSentComponent implements OnInit, OnDestroy {
     }
   }
 
-  async resend(): Promise<void> {
-    if (this.resendCooldown() > 0) return;
+ async resend(): Promise<void> {
+  if (this.resendCooldown() > 0 || this.resending()) return;  
 
-    try {
-      await this.userStore.resendConfirmationLink(this.email);
-      this.toast.success('Confirmation email sent');
-      this.startCooldown(this.COOLDOWN_DURATION);
-    } catch {
-      this.toast.error('Failed to resend confirmation email');
-    }
+  this.resending.set(true);                     
+  try {
+    await this.userStore.resendConfirmationLink(this.email());
+    this.toast.success('Confirmation email sent');
+    this.startCooldown(this.COOLDOWN_DURATION);
+  } catch {
+    this.toast.error('Failed to resend confirmation email');
+  } finally {
+    this.resending.set(false);                
   }
+}
 
   private startCooldown(seconds: number): void {
     this.resendCooldown.set(seconds);

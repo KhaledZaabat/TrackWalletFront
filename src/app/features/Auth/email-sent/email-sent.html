@@ -70,7 +70,7 @@
             <button
               class="pixel-btn pixel-btn--gold font-pixel confirm__resend-btn"
               type="button"
-              [disabled]="resendCooldown() > 0"
+              [disabled]="resendCooldown() > 0 || resending()"
               (click)="resend()"
               aria-live="polite"
             >

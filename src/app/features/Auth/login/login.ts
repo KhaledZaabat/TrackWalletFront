@@ -41,7 +41,7 @@ export class LoginComponent {
         try {
         
 
-          await this.userStore.login(this.loginModel);
+    await  this.userStore.login(this.loginModel());
           this.toast.success(`Welcome back, ${this.userStore.fullName() || 'player'}!`);
           const target = this.route.snapshot.queryParamMap.get('redirectTo') ?? '/dashboard';
           await this.router.navigateByUrl(target);

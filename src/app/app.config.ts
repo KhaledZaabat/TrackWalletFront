@@ -17,7 +17,7 @@ import {
   csrfInterceptor,
   errorInterceptor,
 } from './core/interceptors';
-import { authInitializer } from './core/auth';
+import {  UserStore } from './core/auth';
 import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
 import { LOCAL_STORAGE_CONFIG } from './core/local-storage/local-storage.service';
 import { environment } from './environments/environment';
@@ -40,10 +40,8 @@ export const appConfig: ApplicationConfig = {
       ]),
     ),
 
-    provideAppInitializer(() => {
-      const injector = inject(Injector);
-      return authInitializer(injector)();
-    }),
+    provideAppInitializer(() => inject(UserStore).initialize()),
+
 
     {
       provide: LOCAL_STORAGE_CONFIG,

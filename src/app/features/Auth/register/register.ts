@@ -57,7 +57,7 @@ export class RegisterComponent {
       action: async (t) => {
         this.banner.clear();
         try {
-          await this.userStore.register(this.registerModel);
+          await this.userStore.register(this.registerModel());
           this.toast.success('Welcome, hero!');
           const target = this.route.snapshot.queryParamMap.get('redirectTo');
 

@@ -7,4 +7,3 @@ export { onlineGuard } from './online.guard';
 export { AuthService } from './auth.service';
 export type { LoginRequest } from './auth.service';
 
-export { authInitializer } from './auth.initializer';

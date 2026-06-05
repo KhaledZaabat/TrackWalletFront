@@ -23,7 +23,7 @@ confirmRequest = computed(() => ({
 
   async ngOnInit(): Promise<void> {
     try {
-      await this.userStore.confirmEmail(this.confirmRequest);
+      await this.userStore.confirmEmail(this.confirmRequest());
       this.toast.success('Email confirmed! You can now log in.');
       this.router.navigate(['/login']);
     } catch {

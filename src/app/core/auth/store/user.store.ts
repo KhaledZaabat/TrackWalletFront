@@ -1,19 +1,12 @@
 import { computed, inject } from '@angular/core';
 import { signalStore, withState, withComputed, withMethods, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe } from 'rxjs';
-import { exhaustMap, tap } from 'rxjs/operators';
-import { tapResponse } from '@ngrx/operators';
+import { EMPTY, Observable, firstValueFrom, of, pipe, throwError } from 'rxjs';
+import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
 import { AuthService } from '..';
 import { initialState } from './user-state';
-import {
-  markAuthenticated,
-  markIdle,
-  markLoading,
-  markOffline,
-  markUnauthenticated,
-} from './user-updaters';
+import { markAuthenticated, markIdle, markLoading, markOffline, markUnauthenticated } from './user-updaters';
 import { isApiError } from '../../../shared/helpers';
 import { LoginCredentials } from '../../../features/auth/login/login.model';
 import { RegisterFormModel, toRegisterRequest } from '../../../features/auth/register/register.model';
@@ -26,135 +19,82 @@ export const UserStore = signalStore(
 
   withComputed(({ status, user }) => ({
     isAuthenticated: computed(() => status() === 'loaded'),
-    isOffline: computed(() => status() === 'offline'),
-    fullName: computed(() => user()?.fullName ?? ''),
+    isOffline:       computed(() => status() === 'offline'),
+    fullName:        computed(() => user()?.fullName ?? ''),
   })),
 
-  withMethods((store, auth = inject(AuthService)) => ({
+ withMethods((store, auth = inject(AuthService)) => {
 
+  const fetchAndUpdate$ = () => auth.me().pipe(
+    tap(user => patchState(store, markAuthenticated(user))),
+    catchError(err => {
+      patchState(store, isApiError(err) && err.status === 0 ? markOffline() : markUnauthenticated());
+      return EMPTY;
+    }),
+  );
 
-    load: rxMethod<void>(
-      pipe(
-        tap(() => patchState(store, markLoading())),
-
-        exhaustMap(() =>
-          auth.me().pipe(
-            tapResponse({
-              next: user => patchState(store, markAuthenticated(user)),
-
-              error: err => {
-                if (isApiError(err) && err.status === 401) {
-                  patchState(store, markUnauthenticated());
-                  return;
-                }
-
-                if (isApiError(err) && err.status === 0) {
-                  patchState(store, markOffline());
-                  return;
-                }
-
-                patchState(store, markUnauthenticated());
-                throw err;
-              },
-            })
-          )
-        )
+  const action = <T>(
+    op$: Observable<T>,
+    onSuccess: (val: T) => void,
+    onError:   ()       => void = () => patchState(store, markIdle()),
+  ): Promise<void> => {
+    patchState(store, markLoading());
+    return firstValueFrom(
+      op$.pipe(
+        tap(onSuccess),
+        catchError(err => { onError(); return throwError(() => err); }),
+        map(() => undefined),
       )
-    ),
+    );
+  };
 
+  return {
 
-    login: rxMethod<LoginCredentials>(
-      pipe(
-        tap(() => patchState(store, markLoading())),
+    load: rxMethod<void>(pipe(
+      tap(() => patchState(store, markLoading())),
+      exhaustMap(() => fetchAndUpdate$()),
+    )),
 
-        exhaustMap(credentials =>
-          auth.login(credentials).pipe(
-            tapResponse({
-              next: user => patchState(store, markAuthenticated(user)),
-              error: err => {
-                patchState(store, markUnauthenticated());
-                throw err;
-              },
-            })
-          )
-        )
-      )
-    ),
-
-
-    register: rxMethod<RegisterFormModel>(
-      pipe(
-        tap(() => patchState(store, markLoading())),
-
-        exhaustMap(req =>
-          auth.register(toRegisterRequest(req)).pipe(
-            tapResponse({
-              next: () => patchState(store, markIdle()),
-              error: err => {
-                patchState(store, markIdle());
-                throw err;
-              },
-            })
-          )
-        )
-      )
-    ),
-
-
-    logout: rxMethod<void>(
-      pipe(
-        exhaustMap(() =>
-          auth.logout().pipe(
-            tapResponse({
-              next: () => patchState(store, markUnauthenticated()),
-              error: () => patchState(store, markUnauthenticated()),
-            })
-          )
-        )
-      )
-    ),
-
-
-    resendConfirmationLink: rxMethod<string>(
-      pipe(
-        tap(() => patchState(store, markLoading())),
-
-        exhaustMap(req =>
-          auth.resendConfirmationLink({ email: req }).pipe(
-            tapResponse({
-              next: () => patchState(store, markIdle()),
-              error: err => {
-                patchState(store, markIdle());
-                throw err;
-              },
-            })
-          )
-        )
-      )
-    ),
-
-
-    confirmEmail: rxMethod<ConfirmEmailRequest>(
-      pipe(
-        tap(() => patchState(store, markLoading())),
-
-        exhaustMap(req =>
-          auth.confirmEmail(req).pipe(
-            tapResponse({
-              next: () => patchState(store, markIdle()),
-              error: err => {
-                patchState(store, markIdle());
-                throw err;
-              },
-            })
-          )
-        )
-      )
-    ),
-
-
-    clear() {
-      patchState(store, markUnauthenticated());
+    initialize(): Observable<void> {
+      patchState(store, markLoading());
+      return fetchAndUpdate$().pipe(map(() => undefined));
     },
-  }))
+
+    login: (credentials: LoginCredentials) =>
+      action(
+        auth.login(credentials),
+        user => patchState(store, markAuthenticated(user)),
+        ()   => patchState(store, markUnauthenticated()),
+      ),
+
+    register: (req: RegisterFormModel) =>
+      action(
+        auth.register(toRegisterRequest(req)),
+        () => patchState(store, markIdle()),
+      ),
+
+    resendConfirmationLink: (email: string) =>
+      action(
+        auth.resendConfirmationLink({ email }),
+        () => patchState(store, markIdle()),
+      ),
+
+    confirmEmail: (req: ConfirmEmailRequest) =>
+      action(
+        auth.confirmEmail(req),
+        () => patchState(store, markIdle()),
+      ),
+
+    logout: (): Promise<void> =>
+      firstValueFrom(
+        auth.logout().pipe(
+          catchError(() => of(null)),
+          tap(() => patchState(store, markUnauthenticated())),
+          map(() => undefined),
+        )
+      ),
+
+    clear: (): void => patchState(store, markUnauthenticated()),
+  };
+})
 );
