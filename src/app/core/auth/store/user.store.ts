@@ -11,6 +11,7 @@ import { isApiError } from '../../../shared/helpers';
 import { LoginCredentials } from '../../../features/auth/login/login.model';
 import { RegisterFormModel, toRegisterRequest } from '../../../features/auth/register/register.model';
 import { ConfirmEmailRequest } from '../confirm-email-request';
+import { ForgotPasswordRequest } from '../../../features/auth/forget-password/forget-password-model';
 
 export const UserStore = signalStore(
   { providedIn: 'root' },
@@ -93,7 +94,14 @@ export const UserStore = signalStore(
           map(() => undefined),
         )
       ),
-
+      sendRestPaswordLink:(request:ForgotPasswordRequest):Promise<void>=>{
+      
+        return action(auth.sendRestPaswordLink(request),
+        ()=>patchState(store,markIdle()));
+  
+        
+      
+      },
     clear: (): void => patchState(store, markUnauthenticated()),
   };
 })

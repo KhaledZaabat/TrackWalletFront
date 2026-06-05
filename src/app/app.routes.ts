@@ -38,6 +38,12 @@ export const routes: Routes = [
           ),
       },
       {
+      path: 'forgot-password',
+      canActivate: [guestGuard],
+      loadComponent:
+      ()=>import('./features/auth/forget-password/forget-password').then((c)=>c.ForgetPassword),
+      },
+      {
         path: '',
         canActivate: [authGuard],
         children: [
