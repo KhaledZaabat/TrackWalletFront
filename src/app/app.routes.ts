@@ -30,6 +30,12 @@ export const routes: Routes = [
           import('./features/auth/register/register').then((m) => m.RegisterComponent),
       },
       {
+        path: 'reset-password',
+        canActivate: [guestGuard],
+        loadComponent: () =>
+          import('./features/auth/reset-password/reset-password').then((m) => m.ResetPassword),
+      },
+      {
         path: 'confirmation-email-sent',
         canActivate: [guestGuard],
         loadComponent: () =>
