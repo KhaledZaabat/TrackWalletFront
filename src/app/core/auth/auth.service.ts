@@ -8,6 +8,7 @@ import { User } from './models/me-response.model';
 import { RegisterRequest } from '../../features/auth/register/register.model';
 import { ConfirmEmailRequest, SendConfirmEmailRequest } from './confirm-email-request';
 import { ForgotPasswordRequest } from '../../features/auth/forget-password/forget-password-model';
+import { ResetPasswordRequest } from './store/reset-password-request';
 
 export interface LoginRequest {
   emailOrUsername: string;
@@ -59,6 +60,10 @@ export class AuthService {
   sendRestPaswordLink(request:ForgotPasswordRequest):Observable<void>{
     return this.api.post<void>('/identity/forgot-password',request,{});
   }
+  resetPassword(request:ResetPasswordRequest):Observable<void>{
+ return this.api.post<void>('/identity/reset-password',request,{});
+  }
+  
   logout(): Observable<void> {
     return this.api.post<void>('/identity/logout', {});
   }

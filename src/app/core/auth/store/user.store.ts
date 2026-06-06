@@ -12,6 +12,7 @@ import { LoginCredentials } from '../../../features/auth/login/login.model';
 import { RegisterFormModel, toRegisterRequest } from '../../../features/auth/register/register.model';
 import { ConfirmEmailRequest } from '../confirm-email-request';
 import { ForgotPasswordRequest } from '../../../features/auth/forget-password/forget-password-model';
+import { ResetPasswordRequest } from './reset-password-request';
 
 export const UserStore = signalStore(
   { providedIn: 'root' },
@@ -102,6 +103,13 @@ export const UserStore = signalStore(
         
       
       },
+      resetPassword:(request:ResetPasswordRequest)=>action(
+        auth.resetPassword(request),
+        () => patchState(store, markIdle()),
+
+
+      )
+      ,
     clear: (): void => patchState(store, markUnauthenticated()),
   };
 })
