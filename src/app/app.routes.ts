@@ -36,6 +36,12 @@ export const routes: Routes = [
           import('./features/auth/reset-password/reset-password').then((m) => m.ResetPassword),
       },
       {
+        path: 'password-updated',
+        canActivate: [guestGuard],
+        loadComponent: () =>
+          import('./features/auth/password-updated/password-updated').then((m) => m.PasswordUpdated),
+      },
+      {
         path: 'confirmation-email-sent',
         canActivate: [guestGuard],
         loadComponent: () =>

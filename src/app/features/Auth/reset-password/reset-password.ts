@@ -6,7 +6,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormRoot, form, required, validate } from '@angular/forms/signals';
 
 import { PasswordFormComponent } from '../password-form/password-form';
@@ -31,6 +31,7 @@ interface ResetPasswordForm {
 export class ResetPassword {
   private readonly userStore = inject(UserStore);
   private readonly toast = inject(ToastService);
+  private readonly router = inject(Router);
 
   readonly email = input.required<string>();
   readonly token = input.required<string>();
@@ -81,9 +82,9 @@ export class ResetPassword {
 
           try {
             await this.userStore.resetPassword(this.resetRequest());
-
-  this.toast.success('Your password has been reset successfully.');    
-      } catch (err: unknown) {
+            this.toast.success('Your password has been reset successfully.');
+            await this.router.navigate(['/password-updated']);
+          } catch (err: unknown) {
             this.banner.error(ApiErrorMessage.from(err));
           }
         },
